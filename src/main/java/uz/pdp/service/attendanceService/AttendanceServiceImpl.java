@@ -24,8 +24,13 @@ public class AttendanceServiceImpl extends BaseService<
         >implements AttendanceService{
 
 
-    public AttendanceServiceImpl(AttendanceRepository repository, AbstractValidator<AttendanceEntity, AttendanceRepository> validator, ModelMapper modelMapper) {
-        super(repository, validator, modelMapper);
+    public AttendanceServiceImpl(AttendanceRepository repository, ModelMapper modelMapper) {
+        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>() {
+            @Override
+            public void validate(AttendanceEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
     }
 
     @Override
