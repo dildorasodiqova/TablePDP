@@ -4,10 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.GroupCreateDTO;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
-import uz.pdp.Entity.CourseEntity;
 import uz.pdp.Entity.GroupEntity;
-import uz.pdp.Entity.UserEntity;
-import uz.pdp.Entity.enums.GroupStatus;
 import uz.pdp.repository.GroupRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.service.courseService.CourseServiceImpl;
@@ -29,13 +26,13 @@ public class GroupServiceImpl extends BaseService<
     private final GroupRepository groupRepository;
     private  final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
-    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper, ModelMapper modelMapper1, GroupRepository groupRepository, UserServiceImpl userService, CourseServiceImpl courseService) {
-        super(repository, validator, modelMapper);
-        this.modelMapper = modelMapper1;
-
-        this.groupRepository = groupRepository;
-        this.userService = userService;
-        this.courseService = courseService;
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper) {
+        super(repository, new AbstractValidator<GroupEntity, GroupRepository>() {
+            @Override
+            public void validate(GroupEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
     }
 
     @Override

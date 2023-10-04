@@ -21,10 +21,14 @@ public class CourseServiceImpl extends BaseService<
         CourseCreateDTO,
         AbstractValidator<CourseEntity, CourseRepository>
         > implements CourseService{
-    private  final  CourseRepository courseRepository;
-    public CourseServiceImpl(CourseRepository repository, AbstractValidator<CourseEntity, CourseRepository> validator, ModelMapper modelMapper, CourseRepository courseRepository) {
-        super(repository, validator, modelMapper);
-        this.courseRepository = courseRepository;
+
+    public CourseServiceImpl(CourseRepository repository,  ModelMapper modelMapper) {
+        super(repository, new AbstractValidator<CourseEntity, CourseRepository>() {
+            @Override
+            public void validate(CourseEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "groups")
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -45,4 +45,5 @@ public class GroupEntity extends BaseEntity {
         this.course = course;
         this.startDate = startDate;
     }
+    private List<UserEntity> students;
 }
