@@ -37,6 +37,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.2'
 
 }
 
