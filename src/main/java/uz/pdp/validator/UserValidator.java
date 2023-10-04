@@ -11,4 +11,7 @@ public class UserValidator extends AbstractValidator<UserEntity, UserRepository>
     public void validate(UserEntity entity) {
         super.validate(entity);
     }
+
+
+
 }
