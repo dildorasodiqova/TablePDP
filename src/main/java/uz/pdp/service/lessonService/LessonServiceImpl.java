@@ -21,8 +21,13 @@ public class LessonServiceImpl extends BaseService<
         LessonCreateDTO,
         AbstractValidator<LessonEntity, LessonRepository>
         > implements LessonService{
-    public LessonServiceImpl(LessonRepository repository, AbstractValidator<LessonEntity, LessonRepository> validator, ModelMapper modelMapper) {
-        super(repository, validator, modelMapper);
+    public LessonServiceImpl(LessonRepository repository,  ModelMapper modelMapper) {
+        super(repository, new AbstractValidator<LessonEntity, LessonRepository>() {
+            @Override
+            public void validate(LessonEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
     }
 
     @Override

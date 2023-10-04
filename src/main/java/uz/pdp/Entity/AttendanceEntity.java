@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.Entity.enums.AttendanceStatus;
 
-@Entity(name = "attendances")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

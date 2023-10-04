@@ -20,8 +20,13 @@ public class GroupServiceImpl extends BaseService<
         GroupCreateDTO,
         AbstractValidator<GroupEntity, GroupRepository>
         > implements GroupService{
-    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper) {
-        super(repository, validator, modelMapper);
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper) {
+        super(repository, new AbstractValidator<GroupEntity, GroupRepository>() {
+            @Override
+            public void validate(GroupEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
     }
 
     @Override
