@@ -28,13 +28,12 @@ public class UserServiceImpl extends BaseService<
         > implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtService jwtService) {
     private final UserRepository userRepository;
-    public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper, UserRepository userRepository) {
+    public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtService jwtService) {
         super(repository, validator, modelMapper);
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
-        this.userRepository = userRepository;
+        this.userRepository = repository;
     }
 
     @Override
