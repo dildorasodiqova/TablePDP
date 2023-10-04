@@ -13,12 +13,8 @@ import java.util.UUID;
 @Setter
 public class AttendanceCreateDTO {
     private UUID userId;
-
     private UUID lessonId;
-
     private String reason;
-
     private UUID groupId;
-
     private String status;
 }
