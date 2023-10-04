@@ -1,5 +1,6 @@
 package uz.pdp.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -20,6 +21,7 @@ public class LessonEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private ModuleEntity module;
     private LocalDate date; //// qaysi sanada bo'lishi
+    @Column(unique = true)
     private String topicName; //// mavzuni name si
 
 

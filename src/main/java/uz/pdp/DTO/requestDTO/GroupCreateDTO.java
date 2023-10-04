@@ -20,7 +20,7 @@ public class GroupCreateDTO {
 
     private String groupName;
 
-    private UserEntity mentorId;
+    private UUID mentorId;
 
      private UUID courseId;
 
