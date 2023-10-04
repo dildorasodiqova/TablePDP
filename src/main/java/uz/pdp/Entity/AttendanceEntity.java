@@ -23,7 +23,7 @@ public class AttendanceEntity extends BaseEntity{
     private String reason;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Group group;
+    private GroupEntity group;
 
     @Enumerated(EnumType.STRING)
     private AttendanceStatus status = AttendanceStatus.COME;
