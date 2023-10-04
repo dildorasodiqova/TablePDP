@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Group extends BaseEntity {
+public class GroupEntity extends BaseEntity {
     @Column(unique = true)
     private String groupName;
 
@@ -23,10 +23,10 @@ public class Group extends BaseEntity {
     private GroupStatus groupStatus;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User mentorId;
+    private UserEntity mentorId;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Course course;
+    private CourseEntity course;
 
     private LocalDate startDate;
 
@@ -34,5 +34,5 @@ public class Group extends BaseEntity {
 //    private List<Module> module;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> users;
+    private List<UserEntity> users;
 }

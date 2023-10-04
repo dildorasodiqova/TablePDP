@@ -13,12 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Course extends BaseEntity {
+public class CourseEntity extends BaseEntity {
     @Column(unique = true)
     private String courseName;
     private Integer duration; ///davomiyligini nechi oyligi beradi admin
     private Double price;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Module> module;
+    private List<ModuleEntity> module;
 }
