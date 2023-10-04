@@ -23,12 +23,23 @@ public class GroupServiceImpl extends BaseService<
         AbstractValidator<GroupEntity, GroupRepository>
         > implements GroupService{
     private final GroupRepository groupRepository ;
-    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper, GroupRepository groupRepository) {
-        super(repository, validator, modelMapper);
+
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, GroupRepository groupRepository) {
+        super(repository, new AbstractValidator<GroupEntity, GroupRepository>() {
+            @Override
+            public void validate(GroupEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
         this.groupRepository = groupRepository;
     }
 
+
     @Override
+    public Optional<GroupEntity> getGroup(UUID groupId) {
+
+        return groupRepository.findById(groupId);
+    }
     protected GroupResponseDTO mapEntityToRes(GroupEntity entity) {
         return null;
     }
@@ -38,9 +49,4 @@ public class GroupServiceImpl extends BaseService<
         return null;
     }
 
-    @Override
-    public Optional<GroupEntity> getGroup(UUID groupId) {
-
-        return groupRepository.findById(groupId);
-    }
 }

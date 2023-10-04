@@ -31,8 +31,13 @@ public class AttendanceServiceImpl extends BaseService<
     private final GroupServiceImpl groupService ;
     private final AttendanceRepository attendanceRepository ;
 
-    public AttendanceServiceImpl(AttendanceRepository repository, AbstractValidator<AttendanceEntity, AttendanceRepository> validator, ModelMapper modelMapper, GroupServiceImpl groupService, AttendanceRepository attendanceRepository) {
-        super(repository, validator, modelMapper);
+    public AttendanceServiceImpl(AttendanceRepository repository, ModelMapper modelMapper, GroupServiceImpl groupService, AttendanceRepository attendanceRepository) {
+        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>() {
+            @Override
+            public void validate(AttendanceEntity entity) {
+                super.validate(entity);
+            }
+        }, modelMapper);
         this.groupService = groupService;
         this.attendanceRepository = attendanceRepository;
     }
