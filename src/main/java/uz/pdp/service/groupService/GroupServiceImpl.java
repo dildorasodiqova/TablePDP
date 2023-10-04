@@ -1,7 +1,36 @@
 package uz.pdp.service.groupService;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import uz.pdp.DTO.requestDTO.GroupCreateDTO;
+import uz.pdp.DTO.responceDTO.GroupResponseDTO;
+import uz.pdp.Entity.GroupEntity;
+import uz.pdp.repository.GroupRepository;
+import uz.pdp.service.BaseService;
+import uz.pdp.validator.AbstractValidator;
+
+import java.util.UUID;
 
 @Service
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl extends BaseService<
+        GroupEntity,
+        UUID,
+        GroupRepository,
+        GroupResponseDTO,
+        GroupCreateDTO,
+        AbstractValidator<GroupEntity, GroupRepository>
+        > implements GroupService{
+    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper) {
+        super(repository, validator, modelMapper);
+    }
+
+    @Override
+    protected GroupResponseDTO mapEntityToRes(GroupEntity entity) {
+        return null;
+    }
+
+    @Override
+    protected GroupEntity mapCRToEntity(GroupCreateDTO createReq) {
+        return null;
+    }
 }
