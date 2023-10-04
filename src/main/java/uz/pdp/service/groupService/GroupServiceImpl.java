@@ -45,14 +45,14 @@ public class GroupServiceImpl extends BaseService<
 
     @Override
     protected GroupResponseDTO mapEntityToRes(GroupEntity group) {
-       return new GroupResponseDTO(group.getId(), group.getGroupName(), group.getGroupStatus(), group.getMentor().getId(), group.getMentor().getName(),group.getCourse().getId(), group.getCourse().getCourseName(),group.getStartDate());
+        return new GroupResponseDTO(group.getId(), group.getGroupName(), group.getGroupStatus(), group.getMentor().getId(), group.getMentor().getName(), group.getCourse().getId(), group.getCourse().getCourseName(), group.getStartDate());
+    }
+
     public Optional<GroupEntity> getGroup(UUID groupId) {
 
         return groupRepository.findById(groupId);
     }
-    protected GroupResponseDTO mapEntityToRes(GroupEntity entity) {
-        return null;
-    }
+
 
     @Override
     protected GroupEntity mapCRToEntity(GroupCreateDTO createReq) {
