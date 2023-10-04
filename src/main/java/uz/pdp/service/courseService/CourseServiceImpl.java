@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.CourseCreateDTO;
 import uz.pdp.DTO.responceDTO.CourseResponseDTO;
 import uz.pdp.Entity.CourseEntity;
+import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.repository.CourseRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.validator.AbstractValidator;
@@ -20,13 +21,16 @@ public class CourseServiceImpl extends BaseService<
         CourseCreateDTO,
         AbstractValidator<CourseEntity, CourseRepository>
         > implements CourseService{
-    public CourseServiceImpl(CourseRepository repository,  ModelMapper modelMapper) {
+    private final CourseRepository courseRepository;
+
+    public CourseServiceImpl(CourseRepository repository, ModelMapper modelMapper, CourseRepository courseRepository) {
         super(repository, new AbstractValidator<CourseEntity, CourseRepository>() {
             @Override
             public void validate(CourseEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -37,5 +41,10 @@ public class CourseServiceImpl extends BaseService<
     @Override
     protected CourseEntity mapCRToEntity(CourseCreateDTO createReq) {
         return null;
+    }
+
+    @Override
+    public CourseEntity getByID(UUID id) {
+        return  courseRepository.findById(id).orElseThrow(()->new DataNotFoundException("Course not found"));
     }
 }

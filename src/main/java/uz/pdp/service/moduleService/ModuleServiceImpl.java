@@ -9,6 +9,7 @@ import uz.pdp.repository.ModuleRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.validator.ModuleValidator;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,17 +21,22 @@ public class ModuleServiceImpl extends BaseService<
         ModuleCreateDTO,
         ModuleValidator
         > implements ModuleService{
-    public ModuleServiceImpl(ModuleRepository repository, ModuleValidator validator, ModelMapper modelMapper) {
+    private final ModelMapper modelMapper;
+    private final ModuleRepository moduleRepository;
+    public ModuleServiceImpl(ModuleRepository repository, ModuleValidator validator, ModelMapper modelMapper, ModelMapper modelMapper1, ModuleRepository moduleRepository) {
         super(repository, validator, modelMapper);
+        this.modelMapper = modelMapper1;
+        this.moduleRepository = moduleRepository;
     }
 
     @Override
     protected ModuleResponseDTO mapEntityToRes(ModuleEntity entity) {
-        return null;
+        return modelMapper.map(entity, ModuleResponseDTO.class);
+
     }
 
     @Override
     protected ModuleEntity mapCRToEntity(ModuleCreateDTO createReq) {
-        return null;
+        return new ModuleEntity(createReq.getModuleName());
     }
 }

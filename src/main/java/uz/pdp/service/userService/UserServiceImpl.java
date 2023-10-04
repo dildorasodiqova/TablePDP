@@ -28,10 +28,12 @@ public class UserServiceImpl extends BaseService<
         > implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
     public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtService jwtService) {
         super(repository, validator, modelMapper);
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.userRepository = repository;
     }
 
     @Override
@@ -42,6 +44,11 @@ public class UserServiceImpl extends BaseService<
     @Override
     protected UserEntity mapCRToEntity(UserCreateDTO createReq) {
         return null;
+    }
+
+    @Override
+    public UserEntity getById(UUID id) {
+       return userRepository.findById(id).get();
     }
 
     @Override

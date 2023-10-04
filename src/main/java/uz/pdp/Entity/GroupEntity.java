@@ -8,7 +8,9 @@ import lombok.Setter;
 import uz.pdp.Entity.enums.GroupStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "groups")
 @AllArgsConstructor
@@ -23,7 +25,7 @@ public class GroupEntity extends BaseEntity {
     private GroupStatus groupStatus;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private UserEntity mentorId;
+    private UserEntity mentor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CourseEntity course;
@@ -34,5 +36,14 @@ public class GroupEntity extends BaseEntity {
 //    private List<Module> module;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<UserEntity> users;
+
+    public GroupEntity( String groupName, GroupStatus groupStatus, UserEntity mentor, CourseEntity course, LocalDate startDate) {
+        this.groupName = groupName;
+        this.groupStatus = groupStatus;
+        this.mentor = mentor;
+        this.course = course;
+        this.startDate = startDate;
+    }
     private List<UserEntity> students;
 }
