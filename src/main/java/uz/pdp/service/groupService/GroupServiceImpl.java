@@ -9,9 +9,11 @@ import uz.pdp.repository.GroupRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.validator.AbstractValidator;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
+
 public class GroupServiceImpl extends BaseService<
         GroupEntity,
         UUID,
@@ -20,8 +22,10 @@ public class GroupServiceImpl extends BaseService<
         GroupCreateDTO,
         AbstractValidator<GroupEntity, GroupRepository>
         > implements GroupService{
-    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper) {
+    private final GroupRepository groupRepository ;
+    public GroupServiceImpl(GroupRepository repository, AbstractValidator<GroupEntity, GroupRepository> validator, ModelMapper modelMapper, GroupRepository groupRepository) {
         super(repository, validator, modelMapper);
+        this.groupRepository = groupRepository;
     }
 
     @Override
@@ -32,5 +36,11 @@ public class GroupServiceImpl extends BaseService<
     @Override
     protected GroupEntity mapCRToEntity(GroupCreateDTO createReq) {
         return null;
+    }
+
+    @Override
+    public Optional<GroupEntity> getGroup(UUID groupId) {
+
+        return groupRepository.findById(groupId);
     }
 }

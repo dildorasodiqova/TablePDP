@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.Entity.User;
+
 import uz.pdp.Entity.enums.GroupStatus;
 
 import java.time.LocalDate;

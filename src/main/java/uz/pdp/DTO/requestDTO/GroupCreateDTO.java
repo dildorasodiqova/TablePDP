@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.Entity.Course;
-import uz.pdp.Entity.User;
-import uz.pdp.Entity.enums.GroupStatus;
+import uz.pdp.Entity.UserEntity;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +20,7 @@ public class GroupCreateDTO {
 
     private String groupName;
 
-    private User mentorId;
+    private UserEntity mentorId;
 
      private UUID courseId;
 
