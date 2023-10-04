@@ -20,7 +20,7 @@ import java.util.Collection;
 @Setter
 @Getter
 
-public class User extends BaseEntity implements UserDetails {
+public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
     private String surname;
     private String phoneNumber;

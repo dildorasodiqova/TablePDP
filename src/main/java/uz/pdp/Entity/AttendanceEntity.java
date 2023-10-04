@@ -11,12 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Attendance extends BaseEntity{
+public class AttendanceEntity extends BaseEntity{
     @OneToOne(fetch = FetchType.EAGER)
-    private User user;
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Lesson lesson;
+    private LessonEntity lesson;
 
     @Column(columnDefinition = "text")
     private String reason;
