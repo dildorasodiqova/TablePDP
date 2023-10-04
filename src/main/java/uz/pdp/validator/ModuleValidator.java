@@ -13,5 +13,6 @@ public class ModuleValidator extends AbstractValidator<ModuleEntity, ModuleRepos
     public void validate(ModuleEntity entity) {
         super.validate(entity);
     }
+
 }
 
