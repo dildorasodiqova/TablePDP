@@ -15,6 +15,9 @@ public class Attendance extends BaseEntity{
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
+
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Lesson lesson;
 
