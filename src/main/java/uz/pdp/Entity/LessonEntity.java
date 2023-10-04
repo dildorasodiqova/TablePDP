@@ -18,7 +18,7 @@ import java.time.LocalDate;
 
 public class LessonEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
-    private Module module;
+    private ModuleEntity module;
     private LocalDate date; //// qaysi sanada bo'lishi
     private String topicName; //// mavzuni name si
 

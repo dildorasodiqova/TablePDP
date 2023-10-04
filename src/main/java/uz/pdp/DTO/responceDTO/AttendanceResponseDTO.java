@@ -1,14 +1,9 @@
 package uz.pdp.DTO.responceDTO;
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.Entity.Group;
-import uz.pdp.Entity.Lesson;
-import uz.pdp.Entity.User;
-import uz.pdp.Entity.enums.AttendanceStatus;
+
 
 import java.util.UUID;
 
