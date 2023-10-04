@@ -13,7 +13,6 @@ import uz.pdp.service.BaseService;
 import uz.pdp.validator.AbstractValidator;
 
 import java.util.UUID;
-
 @Service
 public class AttendanceServiceImpl extends BaseService<
         AttendanceEntity,
