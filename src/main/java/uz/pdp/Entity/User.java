@@ -19,7 +19,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @Setter
 @Getter
-
 public class User extends BaseEntity implements UserDetails {
     private String name;
     private String surname;

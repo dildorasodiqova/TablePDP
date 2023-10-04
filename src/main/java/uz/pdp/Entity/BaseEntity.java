@@ -36,4 +36,6 @@ public abstract class BaseEntity {
         @JsonSerialize(using = LocalDateSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         protected LocalDateTime lastUpdateDate;
+
+        protected Boolean active = true;
 }
