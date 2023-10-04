@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import uz.pdp.Entity.BaseEntity;
 import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.validator.AbstractValidator;
-
 import java.util.List;
-
 @RequiredArgsConstructor
 public abstract class BaseService<
         E extends BaseEntity,
