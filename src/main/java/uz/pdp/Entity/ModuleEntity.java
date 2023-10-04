@@ -17,8 +17,9 @@ import java.util.List;
 @Getter
 public class ModuleEntity extends BaseEntity{
     private String moduleName;
+//    @OneToMany( fetch = FetchType.EAGER)
+//    private List<Lesson> lessons;
 
-    @OneToMany( fetch = FetchType.EAGER)
-    private List<LessonEntity> lessons;
+
 
 }

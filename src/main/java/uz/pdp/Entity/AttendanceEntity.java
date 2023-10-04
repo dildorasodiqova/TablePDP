@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.Entity.enums.AttendanceStatus;
 
 @Entity(name = "attendances")
 @AllArgsConstructor
@@ -21,5 +22,10 @@ public class AttendanceEntity extends BaseEntity{
     @Column(columnDefinition = "text")
     private String reason;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Group group;
+
+    @Enumerated(EnumType.STRING)
+    private AttendanceStatus status = AttendanceStatus.COME;
 
 }
