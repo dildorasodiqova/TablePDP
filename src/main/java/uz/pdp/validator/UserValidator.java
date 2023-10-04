@@ -7,6 +7,12 @@ import uz.pdp.repository.UserRepository;
 @Component
 @Slf4j
 public class UserValidator extends AbstractValidator<UserEntity, UserRepository>{
+    private final UserRepository userRepository;
+
+    public UserValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public void validate(UserEntity entity) {
         super.validate(entity);

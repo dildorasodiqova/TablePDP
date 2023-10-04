@@ -20,8 +20,10 @@ public class UserServiceImpl extends BaseService<
         UserCreateDTO,
         UserValidator
         > implements UserService{
-    public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper) {
+    private final UserRepository userRepository;
+    public UserServiceImpl(UserRepository repository, UserValidator validator, ModelMapper modelMapper, UserRepository userRepository) {
         super(repository, validator, modelMapper);
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,5 +34,10 @@ public class UserServiceImpl extends BaseService<
     @Override
     protected UserEntity mapCRToEntity(UserCreateDTO createReq) {
         return null;
+    }
+
+    @Override
+    public UserEntity getById(UUID id) {
+       return userRepository.findById(id).get();
     }
 }
