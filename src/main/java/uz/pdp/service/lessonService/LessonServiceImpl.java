@@ -3,10 +3,13 @@ package uz.pdp.service.lessonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.LessonCreateDTO;
+import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
 import uz.pdp.DTO.responceDTO.LessonResponseDTO;
+import uz.pdp.Entity.AttendanceEntity;
 import uz.pdp.Entity.LessonEntity;
 import uz.pdp.repository.LessonRepository;
 import uz.pdp.service.BaseService;
+import uz.pdp.service.attendanceService.AttendanceServiceImpl;
 import uz.pdp.validator.AbstractValidator;
 
 import java.util.ArrayList;
@@ -23,7 +26,8 @@ public class LessonServiceImpl extends BaseService<
         AbstractValidator<LessonEntity, LessonRepository>
         > implements LessonService{
     private final LessonRepository lessonRepository;
-    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository) {
+    private final AttendanceServiceImpl attendanceService;
+    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService) {
         super(repository, new AbstractValidator<LessonEntity, LessonRepository>() {
             @Override
             public void validate(LessonEntity entity) {
@@ -31,6 +35,7 @@ public class LessonServiceImpl extends BaseService<
             }
         }, modelMapper);
         this.lessonRepository = lessonRepository;
+        this.attendanceService = attendanceService;
     }
 
     @Override
@@ -47,7 +52,9 @@ public class LessonServiceImpl extends BaseService<
     public List<LessonResponseDTO> parse(List<LessonEntity> lessons) {
         List<LessonResponseDTO> list = new ArrayList<>();
         for (LessonEntity lesson : lessons) {
-            list.add(new LessonResponseDTO(lesson.getId(),lesson.getModule().getModuleName(), lesson.getModule().getId(),lesson.getDate(), lesson.getTopicName()));
+            List<AttendanceEntity> list1 =  attendanceService.getByLessonId(lesson.getId());
+            List<AttendanceResponseDTO>  attList = attendanceService.parse(list1);
+            list.add(new LessonResponseDTO(lesson.getId(), lesson.getModuleNumber(), lesson.getDate(), lesson.getTopicName(), lesson.getGroup().getId(), lesson.getLessonStatus().toString(), lesson.getNumber(),attList ));
         }
         return list;
     }
