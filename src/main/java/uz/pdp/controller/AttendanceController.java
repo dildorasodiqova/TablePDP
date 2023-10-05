@@ -16,9 +16,10 @@ public class AttendanceController {
     private final AttendanceServiceImpl attendanceService ;
 
     @GetMapping("/get-didnt-come")
-    public ArrayList<UserResponseDTO> getDidntComeUsers(@RequestParam UUID groupId){
+    public ArrayList<UserResponseDTO> getDidntComeUsers(@RequestParam UUID groupId,
+                                                        @RequestParam Integer moduleNum,
+                                                        @RequestParam Integer lessonNum ){
         ArrayList<UserResponseDTO> userResponseDTOS = attendanceService.getDidntComeUsers(groupId);
-
         return userResponseDTOS ;
 
     }
