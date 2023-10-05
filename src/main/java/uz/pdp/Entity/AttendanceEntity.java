@@ -26,6 +26,6 @@ public class AttendanceEntity extends BaseEntity{
     private GroupEntity group;
 
     @Enumerated(EnumType.STRING)
-    private AttendanceStatus status = AttendanceStatus.COME;
+    private AttendanceStatus status = AttendanceStatus.PARTICIPATED;
 
 }
