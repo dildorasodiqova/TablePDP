@@ -22,6 +22,7 @@ public class CourseCreateDTO {
     @NotBlank(message = "Course name cannot be empty or blank")
     private String courseName;
 
+
     @NotNull(message = "Duration cannot be empty or blank")
     private Integer duration; ///davomiyligini nechi oyligi beradi admin
 

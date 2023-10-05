@@ -46,11 +46,21 @@ public class LessonServiceImpl extends BaseService<
 
     @Override
     protected LessonResponseDTO mapEntityToRes(LessonEntity entity) {
-        return null;
+        List<AttendanceEntity> byLessonId = attendanceService.getByLessonId(entity.getId());
+        List<AttendanceResponseDTO> parse = attendanceService.parse(byLessonId);
+        return new LessonResponseDTO(entity.getId(),
+                entity.getModuleNumber(),
+                entity.getGroup().getId(),
+                entity.getLessonStatus().toString(),
+                entity.getNumber(),
+                parse );
     }
 
     @Override
     protected LessonEntity mapCRToEntity(LessonCreateDTO createReq) {
+//        GroupEntity group = groupService.getById(createReq.getGroupId());
+//        attendanceService.getByLessonId(createReq)
+//        return new LessonEntity(createReq.getModuleNumber(), group,LessonStatus.CREATED, createReq.getNumber(), );
         return null;
     }
 
