@@ -15,6 +15,8 @@ import uz.pdp.service.BaseService;
 import uz.pdp.service.jwt.JwtService;
 import uz.pdp.validator.UserValidator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,5 +61,14 @@ public class UserServiceImpl extends BaseService<
             return new JwtResponse(jwtService.generateToken(entity));
         }
         throw new AuthenticationCredentialsNotFoundException("Password didn't match");
+    }
+
+    @Override
+    public List<UserResponseDTO> parse(List<UserEntity> list) {
+        List<UserResponseDTO> list1 = new ArrayList<>();
+        for (UserEntity user : list) {
+            list1.add(new UserResponseDTO(user.getId(),user.getName(), user.getSurname(), user.getPhoneNumber(), user.getBirthday(), user.getRole().toString()));
+        }
+        return list1;
     }
 }

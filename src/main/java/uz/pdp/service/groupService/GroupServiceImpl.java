@@ -4,16 +4,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.GroupCreateDTO;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
+import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.CourseEntity;
 import uz.pdp.Entity.GroupEntity;
 import uz.pdp.Entity.UserEntity;
 import uz.pdp.Entity.enums.GroupStatus;
+import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.repository.GroupRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.service.courseService.CourseServiceImpl;
 import uz.pdp.service.userService.UserServiceImpl;
 import uz.pdp.validator.AbstractValidator;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,8 +52,14 @@ public class GroupServiceImpl extends BaseService<
     }
 
     public Optional<GroupEntity> getGroup(UUID groupId) {
-
         return groupRepository.findById(groupId);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllByGroupOfUsers(UUID groupId) {
+        GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+        List<UserEntity> students = group.getStudents();
+       return userService.parse(students);
     }
 
 
