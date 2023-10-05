@@ -18,10 +18,11 @@ import java.util.List;
 
 public class LessonEntity extends BaseEntity{
     private Integer moduleNumber;
-
-    private LocalDate date; //// qaysi sanada bo'lishi
-    @Column(unique = true)
-    private String topicName; //// mavzuni name si
+//
+////    private LocalDate date; //// qaysi sanada bo'lishi
+//
+//    @Column(unique = true)
+//    private String topicName; //// mavzuni name si
 
     @ManyToOne(fetch = FetchType.EAGER)
     private GroupEntity group;

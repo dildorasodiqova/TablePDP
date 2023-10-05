@@ -1,5 +1,6 @@
 package uz.pdp.DTO.requestDTO;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,16 +17,15 @@ import java.util.UUID;
 @Getter
 @Setter
 public class LessonCreateDTO {
+    @NotNull(message = "Module number cannot be empty or blank")
     private Integer moduleNumber;
 
-    private LocalDate date; //// qaysi sanada bo'lishi
-
-    private String topicName; //// mavzuni name si
-
+    @NotNull(message = "Group cannot be empty or blank")
     private UUID groupId;
 
     private String lessonStatus;
 
+    @NotNull(message = "Lesson number cannot be empty or blank")
     private  Integer number; /// nechinchi darsligi
 
 }
