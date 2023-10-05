@@ -18,7 +18,7 @@ public class AttendanceResponseDTO {
     private String userName;
 
     private UUID lessonId;
-    private String lessonName;
+//    private String lessonName;
 
     private String reason;
 

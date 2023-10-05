@@ -9,10 +9,12 @@ import uz.pdp.Entity.GroupEntity;
 import uz.pdp.Entity.UserEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 @Repository
 public interface AttendanceRepository extends JpaRepository<AttendanceEntity, UUID> {
 
     @Query("SELECT a.user FROM AttendanceEntity a WHERE a.status = 'DIDNOTCOME' AND a.group = :group")
     ArrayList<UserEntity> findUsersWithDidNotComeStatusByGroup( GroupEntity group);
+    List<AttendanceEntity> findAllByLessonId(UUID lesson_id);
 }
