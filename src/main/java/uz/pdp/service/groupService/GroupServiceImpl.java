@@ -7,6 +7,7 @@ import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.CourseEntity;
 import uz.pdp.Entity.GroupEntity;
+import uz.pdp.Entity.LessonEntity;
 import uz.pdp.Entity.UserEntity;
 import uz.pdp.Entity.enums.GroupStatus;
 import uz.pdp.exception.DataNotFoundException;
@@ -48,7 +49,17 @@ public class GroupServiceImpl extends BaseService<
 
     @Override
     protected GroupResponseDTO mapEntityToRes(GroupEntity group) {
-        return new GroupResponseDTO(group.getId(), group.getGroupName(), group.getGroupStatus(), group.getMentor().getId(), group.getMentor().getName(), group.getCourse().getId(), group.getCourse().getCourseName(), group.getStartDate());
+        List<UserEntity> students = group.getStudents();
+        List<UserResponseDTO> parse = userService.parse(students);
+        return new GroupResponseDTO(
+                group.getId(),
+                group.getGroupName(),
+                group.getGroupStatus(),
+                group.getMentor().getId(),
+                group.getMentor().getName(),
+                group.getCourse().getId(),
+                group.getCourse().getCourseName(),
+                group.getStartDate(),parse);
     }
 
     public Optional<GroupEntity> getGroup(UUID groupId) {
@@ -61,6 +72,17 @@ public class GroupServiceImpl extends BaseService<
         List<UserEntity> students = group.getStudents();
        return userService.parse(students);
     }
+
+    @Override
+    public GroupEntity getById(UUID groupId) {
+        return groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+    }
+
+//    @Override
+//    public GroupResponseDTO createLessonOfGroup(UUID groupId, List<LessonEntity> lesson) {
+//        GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+//        group.set
+//    }
 
 
     @Override

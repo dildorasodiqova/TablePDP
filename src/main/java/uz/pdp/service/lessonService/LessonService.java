@@ -8,5 +8,7 @@ import java.util.UUID;
 
 public interface LessonService {
     List<LessonResponseDTO> parse(List<LessonEntity> lessons);
-    List<LessonEntity> findLessonEntitiesByModule_Id(UUID module_id);
+    List<LessonEntity> findLessonEntitiesByModule_Id(Integer moduleNumber);
+
+    List<LessonEntity> createLesson(UUID groupId);
 }

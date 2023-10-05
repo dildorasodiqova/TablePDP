@@ -48,8 +48,8 @@ public class ModuleServiceImpl extends BaseService<
     }
 
     @Override
-    public List<LessonResponseDTO> getAllByModuleOfLesson(UUID moduleId) {
-        List<LessonEntity> lessons = lessonService.findLessonEntitiesByModule_Id(moduleId);
+    public List<LessonResponseDTO> getAllByModuleOfLesson(Integer  moduleNumber) {
+        List<LessonEntity> lessons = lessonService.findLessonEntitiesByModule_Id(moduleNumber);
         return lessonService.parse(lessons);
     }
 }
