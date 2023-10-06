@@ -63,20 +63,20 @@ public class GroupServiceImpl extends BaseService<
     }
 
     public Optional<GroupEntity> getGroup(UUID groupId) {
-        return groupRepository.findById(groupId);
+        return repository.findById(groupId);
 
     }
 
     @Override
     public List<UserResponseDTO> getAllByGroupOfUsers(UUID groupId) {
-        GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+        GroupEntity group = repository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
         List<UserEntity> students = group.getStudents();
        return userService.parse(students);
     }
 
     @Override
     public GroupEntity getById(UUID groupId) {
-        return groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+        return repository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
     }
 
 
