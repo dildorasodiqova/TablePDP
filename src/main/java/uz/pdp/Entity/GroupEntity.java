@@ -32,12 +32,6 @@ public class GroupEntity extends BaseEntity {
 
     private LocalDate startDate;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Module> module;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<UserEntity> users;
-
     public GroupEntity( String groupName, GroupStatus groupStatus, UserEntity mentor, CourseEntity course, LocalDate startDate) {
         this.groupName = groupName;
         this.groupStatus = groupStatus;
@@ -45,5 +39,6 @@ public class GroupEntity extends BaseEntity {
         this.course = course;
         this.startDate = startDate;
     }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserEntity> students;
 }

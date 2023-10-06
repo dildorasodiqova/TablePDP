@@ -22,7 +22,7 @@ public class LessonServiceImpl extends BaseService<
         AbstractValidator<LessonEntity, LessonRepository>
         > implements LessonService{
     public LessonServiceImpl(LessonRepository repository,  ModelMapper modelMapper) {
-        super(repository, new AbstractValidator<LessonEntity, LessonRepository>() {
+        super(repository, new AbstractValidator<LessonEntity, LessonRepository>(repository) {
             @Override
             public void validate(LessonEntity entity) {
                 super.validate(entity);

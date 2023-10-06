@@ -29,17 +29,15 @@ public class AttendanceServiceImpl extends BaseService<
         >implements AttendanceService{
 
     private final GroupServiceImpl groupService ;
-    private final AttendanceRepository attendanceRepository ;
 
     public AttendanceServiceImpl(AttendanceRepository repository, ModelMapper modelMapper, GroupServiceImpl groupService, AttendanceRepository attendanceRepository) {
-        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>() {
+        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>(repository) {
             @Override
             public void validate(AttendanceEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
         this.groupService = groupService;
-        this.attendanceRepository = attendanceRepository;
     }
 
     @Override
@@ -59,13 +57,12 @@ public class AttendanceServiceImpl extends BaseService<
 
         if (group.isPresent()){
             ArrayList<UserResponseDTO> userResponseDTOS = new ArrayList<>();
-            ArrayList<UserEntity> didNotComeAttendancesByGroup = attendanceRepository.findUsersWithDidNotComeStatusByGroup(group.get());
+            ArrayList<UserEntity> didNotComeAttendancesByGroup = repository.findUsersWithDidNotComeStatusByGroup(group.get());
             for (UserEntity userEntity : didNotComeAttendancesByGroup) {
                 UserResponseDTO userResponseDTO = modelMapper.map(userEntity, UserResponseDTO.class);
                 userResponseDTOS.add(userResponseDTO);
             }
             return userResponseDTOS ;
-
         }
 
         throw new DidNotComeAttendancesNotFound("Users not found");
