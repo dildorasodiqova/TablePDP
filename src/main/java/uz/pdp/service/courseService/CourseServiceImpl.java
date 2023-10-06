@@ -21,16 +21,14 @@ public class CourseServiceImpl extends BaseService<
         CourseCreateDTO,
         AbstractValidator<CourseEntity, CourseRepository>
         > implements CourseService{
-    private final CourseRepository courseRepository;
 
     public CourseServiceImpl(CourseRepository repository, ModelMapper modelMapper, CourseRepository courseRepository) {
-        super(repository, new AbstractValidator<CourseEntity, CourseRepository>() {
+        super(repository, new AbstractValidator<CourseEntity, CourseRepository>(repository) {
             @Override
             public void validate(CourseEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
-        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -45,6 +43,6 @@ public class CourseServiceImpl extends BaseService<
 
     @Override
     public CourseEntity getByID(UUID id) {
-        return  courseRepository.findById(id).orElseThrow(()->new DataNotFoundException("Course not found"));
+        return  repository.findById(id).orElseThrow(()->new DataNotFoundException("Course not found"));
     }
 }

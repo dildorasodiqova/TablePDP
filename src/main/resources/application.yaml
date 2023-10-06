@@ -1,23 +1,23 @@
 
-
 spring:
   datasource:
-    password: 2004
+    url: jdbc:postgresql://localhost:5432/pdp_table
     username: postgres
-    url: jdbc:postgresql://localhost:5432/TablePDP
+    password: 2006
     driver-class-name: org.postgresql.Driver
   jpa:
-    show-sql: true
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
+    open-in-view: false
 
 server:
   port: 8081
 
 jwt:
-  expiry: 30000000
-  secret: qwetuykyjhfdgsafgjhkoiutrefdsavzbxcnmktjyhretgwedfvbnjkrjyerhsfg
+  expiry: 300000
+  secret: gjhkoiutrefdsavzbxcnmktjyhretgwedfvbnjkrjyerhsfg

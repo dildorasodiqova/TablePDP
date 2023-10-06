@@ -2,6 +2,7 @@ package uz.pdp.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uz.pdp.exception.DataAlreadyExistsException;
@@ -18,5 +19,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = DataAlreadyExistsException.class)
     public ResponseEntity<String> dataAlreadyExists(DataAlreadyExistsException e ) {
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(e.getMessage());
+    }
+    @ExceptionHandler(value = AuthenticationCredentialsNotFoundException.class)
+    public ResponseEntity<String> authenticateException(AuthenticationCredentialsNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

@@ -1,5 +1,10 @@
 package uz.pdp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,13 +31,15 @@ import static uz.pdp.Entity.enums.UserRole.USER;
 @NoArgsConstructor
 @Setter
 @Getter
-
 public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
     private String surname;
     private String password;
     @Column(unique = true)
     private String phoneNumber;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private LocalDate birthday;
     @Enumerated(EnumType.STRING)
     private UserRole role = USER;
@@ -52,33 +59,33 @@ public class UserEntity extends BaseEntity implements UserDetails {
         return authorities;
     }
 
-    @Override
-    public String getPassword() {
-        return null;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return password;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return super.isActive.booleanValue();
     }
+
 }

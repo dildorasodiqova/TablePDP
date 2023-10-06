@@ -29,17 +29,16 @@ public class LessonServiceImpl extends BaseService<
         LessonCreateDTO,
         AbstractValidator<LessonEntity, LessonRepository>
         > implements LessonService{
-    private final LessonRepository lessonRepository;
+
     private final AttendanceServiceImpl attendanceService;
     private final GroupServiceImpl groupService;
     public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService) {
-        super(repository, new AbstractValidator<LessonEntity, LessonRepository>() {
+        super(repository, new AbstractValidator<LessonEntity, LessonRepository>(lessonRepository) {
             @Override
             public void validate(LessonEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
-        this.lessonRepository = lessonRepository;
         this.attendanceService = attendanceService;
         this.groupService = groupService;
     }
@@ -77,7 +76,7 @@ public class LessonServiceImpl extends BaseService<
 
     @Override
     public List<LessonEntity> findLessonEntitiesByModule_Id(Integer moduleNumber) {
-        return lessonRepository.findLessonEntitiesByModuleNumber(moduleNumber);
+        return repository.findLessonEntitiesByModuleNumber(moduleNumber);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class LessonServiceImpl extends BaseService<
         GroupEntity group = groupService.getById(groupId);
         List<LessonEntity> lessonEntities = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            LessonEntity save = lessonRepository.save(new LessonEntity(1, group, LessonStatus.CREATED, i, new ArrayList<>()));
+            LessonEntity save = repository.save(new LessonEntity(1, group, LessonStatus.CREATED, i, new ArrayList<>()));
             lessonEntities.add(save);
         }
         return lessonEntities;
