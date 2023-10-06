@@ -34,7 +34,7 @@ public class GroupEntity extends BaseEntity {
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<Module> module;
-
+// buyerda hatolik
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserEntity> students;
 
