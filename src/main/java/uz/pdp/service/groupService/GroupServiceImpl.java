@@ -31,21 +31,21 @@ public class GroupServiceImpl extends BaseService<
         AbstractValidator<GroupEntity, GroupRepository>
         > implements GroupService{
     private final ModelMapper modelMapper;
-    private final GroupRepository groupRepository;
     private  final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
-    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, GroupRepository groupRepository, UserServiceImpl userService, CourseServiceImpl courseService) {
-        super(repository, new AbstractValidator<GroupEntity, GroupRepository>() {
+
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService) {
+        super(repository, new AbstractValidator<GroupEntity, GroupRepository>(repository) {
             @Override
             public void validate(GroupEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
         this.modelMapper = modelMapper1;
-        this.groupRepository = groupRepository;
         this.userService = userService;
         this.courseService = courseService;
     }
+
 
     @Override
     protected GroupResponseDTO mapEntityToRes(GroupEntity group) {
@@ -64,6 +64,7 @@ public class GroupServiceImpl extends BaseService<
 
     public Optional<GroupEntity> getGroup(UUID groupId) {
         return groupRepository.findById(groupId);
+
     }
 
     @Override
@@ -77,12 +78,6 @@ public class GroupServiceImpl extends BaseService<
     public GroupEntity getById(UUID groupId) {
         return groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
     }
-
-//    @Override
-//    public GroupResponseDTO createLessonOfGroup(UUID groupId, List<LessonEntity> lesson) {
-//        GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
-//        group.set
-//    }
 
 
     @Override

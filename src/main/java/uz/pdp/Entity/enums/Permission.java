@@ -10,11 +10,11 @@ public enum Permission {
     GROUP_DELETE("ADMIN"),
     GROUP_UPDATE("ADMIN"),
 
-    //module
-    MODULE_READ("ADMIN"),
-    MODULE_CREATE("ADMIN"),
-    MODULE_DELETE("ADMIN"),
-    MODULE_UPDATE("ADMIN"),
+//    //module
+//    MODULE_READ("ADMIN"),
+//    MODULE_CREATE("ADMIN"),
+//    MODULE_DELETE("ADMIN"),
+//    MODULE_UPDATE("ADMIN"),
 
     // course
     COURSE_READ("ADMIN"),
@@ -23,11 +23,8 @@ public enum Permission {
     COURSE_UPDATE("ADMIN"),
 
     //lesson
-
-    LESSON_READ("ADMIN"),
-    LESSON_CREATE("ADMIN"),
-    LESSON_DELETE("ADMIN"),
-    LESSON_UPDATE("ADMIN"),
+    LESSON_READ("MENTOR"),
+    LESSON_UPDATE("MENTOR"),
 
 
     // user
@@ -39,13 +36,15 @@ public enum Permission {
 
     ATTENDANCE_READ("MENTOR"),
     ATTENDANCE_CREATE("MENTOR"),
-    ATTENDANCE_DELETE("MENTOR"),
     ATTENDANCE_UPDATE("MENTOR");
 
     private String role;
 
     Permission(String role) {
         this.role = role;
+    }
+    public String getRole() {
+        return role;
     }
 
     public List<Permission> getByRole(String role) {

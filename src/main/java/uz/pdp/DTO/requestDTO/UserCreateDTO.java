@@ -1,5 +1,9 @@
 package uz.pdp.DTO.requestDTO;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -27,9 +31,13 @@ public class UserCreateDTO {
     @NotBlank(message = "PhoneNumber cannot be empty or blank")
     private String phoneNumber;
 
+    private String password;
+
     private String role;
 
     @NotBlank(message = "Birthday cannot be empty or blank")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthday;
 
     private Set<String> permissions;

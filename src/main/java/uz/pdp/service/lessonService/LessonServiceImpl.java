@@ -29,7 +29,7 @@ public class LessonServiceImpl extends BaseService<
         LessonCreateDTO,
         AbstractValidator<LessonEntity, LessonRepository>
         > implements LessonService{
-    private final LessonRepository lessonRepository;
+
     private final AttendanceServiceImpl attendanceService;
     private final GroupServiceImpl groupService;
     public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService) {
