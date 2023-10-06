@@ -1,6 +1,7 @@
 package uz.pdp.Entity.enums;
 
 public enum AttendanceStatus {
-    COME,
-    DIDNOTCOME
+    PARTICIPATED,/// darsga qatnashgan
+    ABSENT /// qatnashmagan
+
 }

@@ -22,8 +22,10 @@ import uz.pdp.validator.UserValidator;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static uz.pdp.Entity.enums.UserRole.USER;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends BaseService<
@@ -109,5 +111,12 @@ public class UserServiceImpl extends BaseService<
     public List<UserResponseDTO> getAllByRole(String role) {
          return repository.getAllByRole(role).stream()
                  .map(this::mapEntityToRes).toList();
+      }
+    public List<UserResponseDTO> parse(List<UserEntity> list) {
+        List<UserResponseDTO> list1 = new ArrayList<>();
+        for (UserEntity user : list) {
+            list1.add(new UserResponseDTO(user.getId(),user.getName(), user.getSurname(), user.getPhoneNumber(), user.getBirthday(), user.getRole().toString()));
+        }
+        return list1;
     }
 }

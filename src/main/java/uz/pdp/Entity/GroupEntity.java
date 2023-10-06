@@ -29,7 +29,7 @@ public class GroupEntity extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CourseEntity course;
-
+ 
     private LocalDate startDate;
 
     public GroupEntity( String groupName, GroupStatus groupStatus, UserEntity mentor, CourseEntity course, LocalDate startDate) {
@@ -39,6 +39,8 @@ public class GroupEntity extends BaseEntity {
         this.course = course;
         this.startDate = startDate;
     }
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserEntity> students;
+  
 }

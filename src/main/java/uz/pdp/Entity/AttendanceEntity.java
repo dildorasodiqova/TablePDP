@@ -22,10 +22,10 @@ public class AttendanceEntity extends BaseEntity{
     @Column(columnDefinition = "text")
     private String reason;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GroupEntity group;
 
     @Enumerated(EnumType.STRING)
-    private AttendanceStatus status = AttendanceStatus.COME;
+    private AttendanceStatus status = AttendanceStatus.PARTICIPATED;
 
 }

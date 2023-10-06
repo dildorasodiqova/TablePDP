@@ -20,4 +20,5 @@ public interface UserService {
 
     List<UserResponseDTO> getAllByRole(String role);
 
+     List<UserResponseDTO> parse(List<UserEntity> list);
 }

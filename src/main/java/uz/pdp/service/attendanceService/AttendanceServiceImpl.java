@@ -16,6 +16,7 @@ import uz.pdp.service.groupService.GroupServiceImpl;
 import uz.pdp.validator.AbstractValidator;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 @Service
@@ -67,5 +68,19 @@ public class AttendanceServiceImpl extends BaseService<
 
         throw new DidNotComeAttendancesNotFound("Users not found");
 
+    }
+
+    @Override
+    public List<AttendanceEntity> getByLessonId(UUID lessonId) {
+        return attendanceRepository.findAllByLessonId(lessonId);
+    }
+
+    @Override
+    public List<AttendanceResponseDTO> parse(List<AttendanceEntity> list1) {
+        List<AttendanceResponseDTO> list = new ArrayList<>();
+        for (AttendanceEntity attendance : list1) {
+            list.add(new AttendanceResponseDTO(attendance.getId(), attendance.getUser().getId(),attendance.getUser().getName(), attendance.getLesson().getId(), attendance.getReason(), attendance.getGroup().getId(),attendance.getGroup().getGroupName(), attendance.getStatus().toString() ));
+        }
+        return list;
     }
 }

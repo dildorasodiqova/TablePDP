@@ -33,12 +33,12 @@ public class CourseServiceImpl extends BaseService<
 
     @Override
     protected CourseResponseDTO mapEntityToRes(CourseEntity entity) {
-        return null;
+        return new CourseResponseDTO(entity.getId(), entity.getCourseName(),entity.getDuration(), entity.getPrice());
     }
 
     @Override
     protected CourseEntity mapCRToEntity(CourseCreateDTO createReq) {
-        return null;
+        return new CourseEntity(createReq.getCourseName(), createReq.getDuration(), createReq.getPrice(),createReq.getDuration());
     }
 
     @Override
