@@ -72,7 +72,7 @@ public class AttendanceServiceImpl extends BaseService<
 
     @Override
     public List<AttendanceEntity> getByLessonId(UUID lessonId) {
-        return attendanceRepository.findAllByLessonId(lessonId);
+        return repository.findAllByLessonId(lessonId);
     }
 
     @Override
