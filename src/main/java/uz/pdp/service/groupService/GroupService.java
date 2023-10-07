@@ -16,6 +16,7 @@ public interface GroupService {
     List<UserResponseDTO> getAllByGroupOfUsers(UUID groupId);
 
     GroupEntity getById(UUID groupId);
+    List<GroupResponseDTO> getByMentorId(UUID mentorId);
 
 //    GroupResponseDTO createLessonOfGroup(UUID , List<LessonEntity> );
 

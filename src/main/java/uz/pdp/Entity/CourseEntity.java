@@ -18,7 +18,7 @@ public class CourseEntity extends BaseEntity {
     private String courseName;
     private Integer duration; ///davomiyligini nechi oyligi beradi admin
     private Double price;
-    private Integer moduls;
+    private Integer modules;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<ModuleEntity> module;
