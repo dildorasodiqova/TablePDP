@@ -33,7 +33,6 @@ public class GroupServiceImpl extends BaseService<
     private final ModelMapper modelMapper;
     private  final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
-    private final GroupRepository groupRepository;
 
     public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService, GroupRepository groupRepository) {
         super(repository, new AbstractValidator<GroupEntity, GroupRepository>(repository) {
@@ -45,7 +44,6 @@ public class GroupServiceImpl extends BaseService<
         this.modelMapper = modelMapper1;
         this.userService = userService;
         this.courseService = courseService;
-        this.groupRepository = groupRepository;
     }
 
 
@@ -81,7 +79,7 @@ public class GroupServiceImpl extends BaseService<
 
     @Override
     public List<GroupResponseDTO> getByMentorId(UUID mentorId) {
-        List<GroupEntity> all = groupRepository.findAllByMentorId(mentorId);
+        List<GroupEntity> all = repository.findAllByMentorId(mentorId);
         return parse(all);
 
     }
