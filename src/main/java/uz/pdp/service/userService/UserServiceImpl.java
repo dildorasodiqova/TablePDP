@@ -99,10 +99,11 @@ public class UserServiceImpl extends BaseService<
     }
 
     @Override
-    public String updateRole(UUID userId, String role) {
+    public String updateRole(UUID userId, String role,Set<String> permissions) {
         UserEntity entity = repository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException("User not found with id: " + userId));
         entity.setRole(UserRole.valueOf(role));
+        setPermission(entity,permissions);
         repository.save(entity);
         return entity.getName() + "'s role updated";
     }
@@ -118,5 +119,14 @@ public class UserServiceImpl extends BaseService<
             list1.add(new UserResponseDTO(user.getId(),user.getName(), user.getSurname(), user.getPhoneNumber(), user.getBirthday(), user.getRole().toString(),user.getPermissions()));
         }
         return list1;
+    }
+
+    @Override
+    public String deleteByIdUser(UUID userId) {
+        UserEntity entity = repository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+        entity.setIsActive(false);
+        repository.save(entity);
+        return "User deleted";
     }
 }
