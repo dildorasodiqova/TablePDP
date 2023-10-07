@@ -32,10 +32,9 @@ public class LessonServiceImpl extends BaseService<
 
     private final AttendanceServiceImpl attendanceService;
     private final GroupServiceImpl groupService;
-    private final LessonRepository lessonRepository;
 
-    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService, LessonRepository lessonRepository1) {
-        super(repository, new AbstractValidator<LessonEntity, LessonRepository>(lessonRepository) {
+    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper,  AttendanceServiceImpl attendanceService, GroupServiceImpl groupService, LessonRepository lessonRepository1) {
+        super(repository, new AbstractValidator<LessonEntity, LessonRepository>(repository) {
             @Override
             public void validate(LessonEntity entity) {
                 super.validate(entity);
@@ -43,7 +42,7 @@ public class LessonServiceImpl extends BaseService<
         }, modelMapper);
         this.attendanceService = attendanceService;
         this.groupService = groupService;
-        this.lessonRepository = lessonRepository1;
+
     }
 
     @Override
@@ -95,7 +94,7 @@ public class LessonServiceImpl extends BaseService<
 
     @Override
     public LessonResponseDTO updateStatus(UUID lessonId, String status) {
-        LessonEntity lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+        LessonEntity lesson = repository.findById(lessonId).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
         lesson.setLessonStatus(LessonStatus.valueOf(status.toUpperCase()));
         return mapEntityToRes(lesson);
     }
