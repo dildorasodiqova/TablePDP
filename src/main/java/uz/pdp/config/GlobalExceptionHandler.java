@@ -1,5 +1,6 @@
 package uz.pdp.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -23,5 +24,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AuthenticationCredentialsNotFoundException.class)
     public ResponseEntity<String> authenticateException(AuthenticationCredentialsNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler(value = ExpiredJwtException.class)
+    public ResponseEntity<String> expired (ExpiredJwtException e) {
+        return ResponseEntity.status(401).body(e.getMessage());
     }
 }
