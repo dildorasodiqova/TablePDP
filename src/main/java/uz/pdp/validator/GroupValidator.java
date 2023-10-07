@@ -11,16 +11,15 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class GroupValidator extends AbstractValidator<GroupEntity, GroupRepository>{
-    private final GroupRepository groupRepository;
 
-    public GroupValidator(GroupRepository groupRepository) {
-        this.groupRepository = groupRepository;
+    public GroupValidator(GroupRepository repository) {
+        super(repository);
     }
 
     @Override
     public void validate(GroupEntity entity) {
         log.info("validating" + entity.getClass().getName());
-        Optional<GroupEntity> byGroupName = groupRepository.findByGroupName(entity.getGroupName());
+        Optional<GroupEntity> byGroupName = repository.findByGroupName(entity.getGroupName());
         if (byGroupName.isPresent()){
             throw  new DataAlreadyExistsException("Group is already exist with name:" + byGroupName);
         }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.DTO.requestDTO.AuthDTO;
+import uz.pdp.DTO.requestDTO.SignUpDTO;
 import uz.pdp.DTO.requestDTO.UserCreateDTO;
 import uz.pdp.DTO.responceDTO.JwtResponse;
 import uz.pdp.service.userService.UserServiceImpl;
@@ -17,15 +18,13 @@ public class AuthController {
     private final UserServiceImpl userService;
     @PermitAll
     @PostMapping("/sign-up")
-    public String auth (@RequestBody UserCreateDTO dto) {
-        System.out.println(dto.getName());
+    public String auth (@RequestBody SignUpDTO dto) {
         userService.create(dto);
         return "Successfully signed up";
     }
-
     @PermitAll
     @GetMapping("/sign-in")
-    public JwtResponse signIN (@RequestBody AuthDTO dto) {
+    public JwtResponse signIn (@RequestBody AuthDTO dto) {
         return userService.signIn(dto);
     }
 
