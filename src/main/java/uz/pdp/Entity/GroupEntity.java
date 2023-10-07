@@ -31,6 +31,7 @@ public class GroupEntity extends BaseEntity {
     private CourseEntity course;
 
     private LocalDate startDate;
+     private Integer groupModule;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<Module> module;
