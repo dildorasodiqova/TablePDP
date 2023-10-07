@@ -16,9 +16,7 @@ public class AttendanceResponseDTO {
 
     private UUID userId;
     private String userName;
-
     private String reason;
-
     private String status;
 
 }

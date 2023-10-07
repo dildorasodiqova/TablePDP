@@ -32,27 +32,25 @@ public class AttendanceServiceImpl extends BaseService<
         >implements AttendanceService{
 
     private final GroupServiceImpl groupService ;
-    private final AttendanceRepository attendanceRepository ;
 
     public AttendanceServiceImpl(AttendanceRepository repository, ModelMapper modelMapper, GroupServiceImpl groupService, AttendanceRepository attendanceRepository) {
-        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>() {
+        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>(attendanceRepository) {
             @Override
             public void validate(AttendanceEntity entity) {
                 super.validate(entity);
             }
         }, modelMapper);
         this.groupService = groupService;
-        this.attendanceRepository = attendanceRepository;
     }
 
     @Override
     protected AttendanceResponseDTO mapEntityToRes(AttendanceEntity entity) {
-        return null;
+        return modelMapper.map(entity , AttendanceResponseDTO.class);
     }
 
     @Override
     protected AttendanceEntity mapCRToEntity(AttendanceCreateDTO createReq) {
-        return null;
+        return modelMapper.map(createReq, AttendanceEntity.class);
     }
 
     @Override
@@ -61,14 +59,14 @@ public class AttendanceServiceImpl extends BaseService<
         Optional<GroupEntity> group = groupService.getGroup(getAbsentStudents.getGroupId());
         Integer moduleNum = getAbsentStudents.getModuleNum();
         Integer lessonNum = getAbsentStudents.getLessonNum();
-
-        ArrayList<AttendanceEntity> attendanceEntities = attendanceRepository.getAbsentStudents(group.get(), moduleNum , lessonNum);
+        String status ="PARTICIPATED";
+        ArrayList<AttendanceEntity> attendanceEntities = repository.getAbsentStudents(group.get(), moduleNum , lessonNum , status);
         if (!attendanceEntities.isEmpty()){
             ArrayList<AttendanceResponseDTO> attendanceResponseDTOArrayList = new ArrayList<>();
+            System.out.println("hello");
 
             for (AttendanceEntity attendanceEntity : attendanceEntities) {
-                AttendanceResponseDTO attendanceResponseDTO = new AttendanceResponseDTO(attendanceEntity.getUser().getId(),
-                        attendanceEntity.getUser().getUsername(), attendanceEntity.getReason() , attendanceEntity.getStatus().toString());
+                AttendanceResponseDTO attendanceResponseDTO = mapEntityToRes(attendanceEntity);
                 attendanceResponseDTOArrayList.add(attendanceResponseDTO);
             }
             return attendanceResponseDTOArrayList ;
@@ -79,7 +77,7 @@ public class AttendanceServiceImpl extends BaseService<
 
     @Override
     public List<AttendanceEntity> getByLessonId(UUID lessonId) {
-        return attendanceRepository.findAllByLessonId(lessonId);
+        return repository.findAllByLessonId(lessonId);
     }
 
     @Override
