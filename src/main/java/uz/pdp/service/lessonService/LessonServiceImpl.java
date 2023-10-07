@@ -4,12 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.LessonCreateDTO;
 import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
-import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.LessonResponseDTO;
 import uz.pdp.Entity.AttendanceEntity;
 import uz.pdp.Entity.GroupEntity;
 import uz.pdp.Entity.LessonEntity;
 import uz.pdp.Entity.enums.LessonStatus;
+import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.repository.LessonRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.service.attendanceService.AttendanceServiceImpl;
@@ -28,11 +28,13 @@ public class LessonServiceImpl extends BaseService<
         LessonResponseDTO,
         LessonCreateDTO,
         AbstractValidator<LessonEntity, LessonRepository>
-        > implements LessonService{
+        > implements LessonService {
 
     private final AttendanceServiceImpl attendanceService;
     private final GroupServiceImpl groupService;
-    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService) {
+    private final LessonRepository lessonRepository;
+
+    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, LessonRepository lessonRepository, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService, LessonRepository lessonRepository1) {
         super(repository, new AbstractValidator<LessonEntity, LessonRepository>(lessonRepository) {
             @Override
             public void validate(LessonEntity entity) {
@@ -41,6 +43,7 @@ public class LessonServiceImpl extends BaseService<
         }, modelMapper);
         this.attendanceService = attendanceService;
         this.groupService = groupService;
+        this.lessonRepository = lessonRepository1;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class LessonServiceImpl extends BaseService<
                 entity.getGroup().getId(),
                 entity.getLessonStatus().toString(),
                 entity.getNumber(),
-                parse );
+                parse);
     }
 
     @Override
@@ -67,9 +70,9 @@ public class LessonServiceImpl extends BaseService<
     public List<LessonResponseDTO> parse(List<LessonEntity> lessons) {
         List<LessonResponseDTO> list = new ArrayList<>();
         for (LessonEntity lesson : lessons) {
-            List<AttendanceEntity> list1 =  attendanceService.getByLessonId(lesson.getId());
-            List<AttendanceResponseDTO>  attList = attendanceService.parse(list1);
-            list.add(new LessonResponseDTO(lesson.getId(), lesson.getModuleNumber(),  lesson.getGroup().getId(), lesson.getLessonStatus().toString(), lesson.getNumber(),attList ));
+            List<AttendanceEntity> list1 = attendanceService.getByLessonId(lesson.getId());
+            List<AttendanceResponseDTO> attList = attendanceService.parse(list1);
+            list.add(new LessonResponseDTO(lesson.getId(), lesson.getModuleNumber(), lesson.getGroup().getId(), lesson.getLessonStatus().toString(), lesson.getNumber(), attList));
         }
         return list;
     }
@@ -83,10 +86,17 @@ public class LessonServiceImpl extends BaseService<
     public List<LessonEntity> createLesson(UUID groupId) {
         GroupEntity group = groupService.getById(groupId);
         List<LessonEntity> lessonEntities = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             LessonEntity save = repository.save(new LessonEntity(1, group, LessonStatus.CREATED, i, new ArrayList<>()));
             lessonEntities.add(save);
         }
         return lessonEntities;
+    }
+
+    @Override
+    public LessonResponseDTO updateStatus(UUID lessonId, String status) {
+        LessonEntity lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+        lesson.setLessonStatus(LessonStatus.valueOf(status.toUpperCase()));
+        return mapEntityToRes(lesson);
     }
 }

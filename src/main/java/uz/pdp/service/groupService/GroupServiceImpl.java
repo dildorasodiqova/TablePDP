@@ -7,7 +7,6 @@ import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.CourseEntity;
 import uz.pdp.Entity.GroupEntity;
-import uz.pdp.Entity.LessonEntity;
 import uz.pdp.Entity.UserEntity;
 import uz.pdp.Entity.enums.GroupStatus;
 import uz.pdp.exception.DataNotFoundException;
@@ -17,6 +16,7 @@ import uz.pdp.service.courseService.CourseServiceImpl;
 import uz.pdp.service.userService.UserServiceImpl;
 import uz.pdp.validator.AbstractValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,8 +33,9 @@ public class GroupServiceImpl extends BaseService<
     private final ModelMapper modelMapper;
     private  final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
+    private final GroupRepository groupRepository;
 
-    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService) {
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService, GroupRepository groupRepository) {
         super(repository, new AbstractValidator<GroupEntity, GroupRepository>(repository) {
             @Override
             public void validate(GroupEntity entity) {
@@ -44,6 +45,7 @@ public class GroupServiceImpl extends BaseService<
         this.modelMapper = modelMapper1;
         this.userService = userService;
         this.courseService = courseService;
+        this.groupRepository = groupRepository;
     }
 
 
@@ -56,9 +58,7 @@ public class GroupServiceImpl extends BaseService<
                 group.getGroupName(),
                 group.getGroupStatus(),
                 group.getMentor().getId(),
-                group.getMentor().getName(),
                 group.getCourse().getId(),
-                group.getCourse().getCourseName(),
                 group.getStartDate(),parse);
     }
 
@@ -78,6 +78,24 @@ public class GroupServiceImpl extends BaseService<
     public GroupEntity getById(UUID groupId) {
         return repository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
     }
+
+    @Override
+    public List<GroupResponseDTO> getByMentorId(UUID mentorId) {
+        List<GroupEntity> all = groupRepository.findAllByMentorId(mentorId);
+        return parse(all);
+
+    }
+
+    public List<GroupResponseDTO> parse(List<GroupEntity> all){
+        List<GroupResponseDTO> list = new ArrayList<>();
+        for (GroupEntity group : all) {
+            List<UserEntity> students = group.getStudents();
+            List<UserResponseDTO> parse = userService.parse(students);
+            list.add(new GroupResponseDTO(group.getId(), group.getGroupName(), group.getGroupStatus(), group.getMentor().getId(), group.getCourse().getId(), group.getStartDate(),parse ));
+        }
+        return list;
+    }
+
 
 
     @Override

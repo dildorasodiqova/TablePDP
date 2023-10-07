@@ -11,4 +11,5 @@ public interface LessonService {
     List<LessonEntity> findLessonEntitiesByModule_Id(Integer moduleNumber);
 
     List<LessonEntity> createLesson(UUID groupId);
+    LessonResponseDTO updateStatus(UUID lessonId, String status);
 }

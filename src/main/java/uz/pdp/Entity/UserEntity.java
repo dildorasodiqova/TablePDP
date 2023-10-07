@@ -59,13 +59,13 @@ public class UserEntity extends BaseEntity implements UserDetails {
         return authorities;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+//    public String getPhoneNumber() {
+//        return phoneNumber;
+//    }
 
     @Override
     public String getUsername() {
-        return password;
+        return phoneNumber;
     }
 
     @Override
