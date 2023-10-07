@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseService<
 
     @Override
     protected UserResponseDTO mapEntityToRes(UserEntity entity) {
-        return new UserResponseDTO(entity.getId(), entity.getName(), entity.getSurname(), entity.getPhoneNumber(),entity.getBirthday(),entity.getRole().toString());
+        return new UserResponseDTO(entity.getId(), entity.getName(), entity.getSurname(), entity.getPhoneNumber(),entity.getBirthday(),entity.getRole().toString(),entity.getPermissions());
     }
 
     @Override
@@ -109,13 +109,13 @@ public class UserServiceImpl extends BaseService<
 
     @Override
     public List<UserResponseDTO> getAllByRole(String role) {
-         return repository.getAllByRole(role).stream()
+         return repository.getAllByRole(UserRole.valueOf(role)).stream()
                  .map(this::mapEntityToRes).toList();
       }
     public List<UserResponseDTO> parse(List<UserEntity> list) {
         List<UserResponseDTO> list1 = new ArrayList<>();
         for (UserEntity user : list) {
-            list1.add(new UserResponseDTO(user.getId(),user.getName(), user.getSurname(), user.getPhoneNumber(), user.getBirthday(), user.getRole().toString()));
+            list1.add(new UserResponseDTO(user.getId(),user.getName(), user.getSurname(), user.getPhoneNumber(), user.getBirthday(), user.getRole().toString(),user.getPermissions()));
         }
         return list1;
     }

@@ -1,6 +1,7 @@
 package uz.pdp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.DTO.requestDTO.UserCreateDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
@@ -25,7 +26,8 @@ public class UserController {
             ) {
         return userService.updateRole(userId,role);
     }
-    @GetMapping("get-all")
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('USER_READ') or hasRole('SUPER_ADMIN')")
+    @GetMapping("/get-all")
     public List<UserResponseDTO> getAll(
             @RequestParam(defaultValue = "USER") String role) {
         return userService.getAllByRole(role);

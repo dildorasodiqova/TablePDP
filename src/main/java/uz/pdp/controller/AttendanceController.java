@@ -17,9 +17,6 @@ public class AttendanceController {
 
     @GetMapping("/get-didnt-come")
     public ArrayList<UserResponseDTO> getDidntComeUsers(@RequestParam UUID groupId){
-        ArrayList<UserResponseDTO> userResponseDTOS = attendanceService.getDidntComeUsers(groupId);
-
-        return userResponseDTOS ;
-
+        return attendanceService.getDidntComeUsers(groupId);
     }
 }
