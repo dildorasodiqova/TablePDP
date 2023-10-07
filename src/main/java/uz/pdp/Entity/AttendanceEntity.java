@@ -22,9 +22,7 @@ public class AttendanceEntity extends BaseEntity{
     @Column(columnDefinition = "text")
     private String reason;
 
-
-    // TODO better to remove, looks redundant
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GroupEntity group;
 
     @Enumerated(EnumType.STRING)

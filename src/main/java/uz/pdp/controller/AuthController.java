@@ -18,6 +18,7 @@ public class AuthController {
     @PermitAll
     @PostMapping("/sign-up")
     public String auth (@RequestBody UserCreateDTO dto) {
+        System.out.println(dto.getName());
         userService.create(dto);
         return "Successfully signed up";
     }

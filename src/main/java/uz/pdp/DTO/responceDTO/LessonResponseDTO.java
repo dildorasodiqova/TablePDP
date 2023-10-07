@@ -22,6 +22,10 @@ public class LessonResponseDTO {
     private LocalDate date; //// qaysi sanada bo'lishi
 
     private String topicName; //// mavzuni name si
+//
+//    private LocalDate date; //// qaysi sanada bo'lishi
+//
+//    private String topicName; //// mavzuni name si
 
     private UUID groupId;
 

@@ -1,5 +1,6 @@
 package uz.pdp.controller;
 
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +18,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceServiceImpl attendanceService ;
-
+    @PermitAll
     @GetMapping("/absent-students")
     public ArrayList<AttendanceResponseDTO> getDidntComeUsers(@RequestBody GetAbsentStudents getAbsentStudents){
         return attendanceService.getAbsentStudent(getAbsentStudents);
 
     }
+
+
 }

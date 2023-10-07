@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ModuleService {
-    List<LessonResponseDTO> getAllByModuleOfLesson(UUID moduleId);
+    List<LessonResponseDTO> getAllByModuleOfLesson(Integer  moduleNumber);
 
 }
