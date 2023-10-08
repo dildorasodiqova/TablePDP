@@ -1,13 +1,13 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/test_project
+    url: jdbc:postgresql://localhost:5432/pdp_table
     username: postgres
-    password: 4743
+    password: 2006
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

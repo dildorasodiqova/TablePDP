@@ -5,6 +5,7 @@ import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.UserEntity;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import uz.pdp.DTO.requestDTO.AuthDTO;
@@ -16,9 +17,11 @@ public interface UserService {
 
     UserResponseDTO addUser(UserCreateDTO dto);
 
-    String updateRole(UUID userId, String role);
+    String updateRole(UUID userId, String role, Set<String> permissions);
 
     List<UserResponseDTO> getAllByRole(String role);
 
      List<UserResponseDTO> parse(List<UserEntity> list);
+
+    String deleteByIdUser(UUID userId);
 }
