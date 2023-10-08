@@ -1,5 +1,6 @@
 package uz.pdp.service.attendanceService;
 
+import uz.pdp.DTO.requestDTO.GetAbsentStudents;
 import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.AttendanceEntity;
