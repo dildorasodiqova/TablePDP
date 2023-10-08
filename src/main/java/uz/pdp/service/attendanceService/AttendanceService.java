@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AttendanceService {
-    ArrayList<UserResponseDTO> getDidntComeUsers(UUID groupId);
-
-
     List<AttendanceEntity> getByLessonId(UUID id);
 
     List<AttendanceResponseDTO> parse(List<AttendanceEntity> list1);
 
 //    List<AttendanceEntity> studentsOfAttendance(List<UserEntity> students);
+
+    ArrayList<AttendanceResponseDTO> getAbsentStudent(GetAbsentStudents getAbsentStudents);
+
 }

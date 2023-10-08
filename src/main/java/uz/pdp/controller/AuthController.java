@@ -23,8 +23,9 @@ public class AuthController {
         return "Successfully signed up";
     }
     @PermitAll
-    @GetMapping("/sign-in")
+    @PostMapping("/sign-in")
     public JwtResponse signIn (@RequestBody AuthDTO dto) {
         return userService.signIn(dto);
     }
+
 }

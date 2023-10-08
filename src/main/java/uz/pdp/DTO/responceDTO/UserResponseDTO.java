@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.Entity.enums.Permission;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,4 +23,5 @@ public class UserResponseDTO extends MentorDTO{
     private String phoneNumber;
     private LocalDate birthday;
     private String role;
+    private Set<Permission> permissions;
 }

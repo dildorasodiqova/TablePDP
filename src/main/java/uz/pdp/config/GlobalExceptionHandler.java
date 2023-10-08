@@ -1,5 +1,6 @@
 package uz.pdp.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uz.pdp.exception.DataAlreadyExistsException;
 import uz.pdp.exception.DataNotFoundException;
+import uz.pdp.exception.MyValidationException;
 
 import java.util.zip.DataFormatException;
 
@@ -22,6 +24,14 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(value = AuthenticationCredentialsNotFoundException.class)
     public ResponseEntity<String> authenticateException(AuthenticationCredentialsNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler(value = ExpiredJwtException.class)
+    public ResponseEntity<String> expired (ExpiredJwtException e) {
+        return ResponseEntity.status(401).body(e.getMessage());
+    }
+    @ExceptionHandler(value = MyValidationException.class)
+    public ResponseEntity<String> validException (MyValidationException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }
