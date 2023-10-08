@@ -23,7 +23,7 @@ public class GroupController {
     private final LessonServiceImpl lessonService;
 
     @PostMapping("/create")
-    public ResponseEntity<GroupResponseDTO> create(@RequestBody GroupCreateDTO groupCreateDTO, Principal principal) {
+    public ResponseEntity<GroupResponseDTO> create(@RequestBody GroupCreateDTO groupCreateDTO) {
         GroupResponseDTO groupResponseDTO = groupService.create(groupCreateDTO);
         List<LessonEntity> lesson = lessonService.createLesson(groupResponseDTO.getGroupId());
 //        GroupResponseDTO gr = groupService.createLessonOfGroup(groupResponseDTO.getGroupId(), lesson);

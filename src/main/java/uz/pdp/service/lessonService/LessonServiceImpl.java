@@ -8,12 +8,14 @@ import uz.pdp.DTO.responceDTO.LessonResponseDTO;
 import uz.pdp.Entity.AttendanceEntity;
 import uz.pdp.Entity.GroupEntity;
 import uz.pdp.Entity.LessonEntity;
+import uz.pdp.Entity.UserEntity;
 import uz.pdp.Entity.enums.LessonStatus;
 import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.repository.LessonRepository;
 import uz.pdp.service.BaseService;
 import uz.pdp.service.attendanceService.AttendanceServiceImpl;
 import uz.pdp.service.groupService.GroupServiceImpl;
+import uz.pdp.service.userService.UserServiceImpl;
 import uz.pdp.validator.AbstractValidator;
 
 import java.util.ArrayList;
@@ -32,8 +34,9 @@ public class LessonServiceImpl extends BaseService<
 
     private final AttendanceServiceImpl attendanceService;
     private final GroupServiceImpl groupService;
+    private final UserServiceImpl userService;
 
-    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper,  AttendanceServiceImpl attendanceService, GroupServiceImpl groupService, LessonRepository lessonRepository1) {
+    public LessonServiceImpl(LessonRepository repository, ModelMapper modelMapper, AttendanceServiceImpl attendanceService, GroupServiceImpl groupService, LessonRepository lessonRepository1, UserServiceImpl userService) {
         super(repository, new AbstractValidator<LessonEntity, LessonRepository>(repository) {
             @Override
             public void validate(LessonEntity entity) {
@@ -43,6 +46,7 @@ public class LessonServiceImpl extends BaseService<
         this.attendanceService = attendanceService;
         this.groupService = groupService;
 
+        this.userService = userService;
     }
 
     @Override
@@ -56,13 +60,14 @@ public class LessonServiceImpl extends BaseService<
                 entity.getNumber(),
                 parse);
     }
+///hatolik bor
 
     @Override
     protected LessonEntity mapCRToEntity(LessonCreateDTO createReq) {
-//        GroupEntity group = groupService.getById(createReq.getGroupId());
-//        attendanceService.getByLessonId(createReq)
-//        return new LessonEntity(createReq.getModuleNumber(), group,LessonStatus.CREATED, createReq.getNumber(), );
-        return null;
+        GroupEntity group = groupService.getById(createReq.getGroupId());
+        List<UserEntity> students = group.getStudents();
+//        List<AttendanceEntity> list = attendanceService.studentsOfAttendance(students);
+        return new LessonEntity(createReq.getModuleNumber(), group,LessonStatus.CREATED, createReq.getNumber());
     }
 
     @Override
