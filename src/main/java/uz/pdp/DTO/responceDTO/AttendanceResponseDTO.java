@@ -12,19 +12,11 @@ import java.util.UUID;
 @Getter
 @Setter
 public class AttendanceResponseDTO {
-    private UUID attId;
+
 
     private UUID userId;
     private String userName;
-
-    private UUID lessonId;
-//    private String lessonName;
-
     private String reason;
-
-    private UUID groupId;
-    private String groupName;
-
     private String status;
 
 }
