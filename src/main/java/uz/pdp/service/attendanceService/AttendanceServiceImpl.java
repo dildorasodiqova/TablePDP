@@ -91,4 +91,12 @@ public class AttendanceServiceImpl extends BaseService<
         }
         return list;
     }
+
+//    @Override
+//    public List<AttendanceEntity> studentsOfAttendance(List<UserEntity> students) {
+//        List<AttendanceEntity> list = new ArrayList<>();
+//        for (UserEntity student : students) {
+//            list.add(new AttendanceEntity());
+//        }
+//    }
 }

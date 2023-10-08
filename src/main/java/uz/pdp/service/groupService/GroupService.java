@@ -13,10 +13,11 @@ import java.util.UUID;
 
 public interface GroupService {
     Optional<GroupEntity> getGroup(UUID groupId);
-    List<UserResponseDTO> getAllByGroupOfUsers(UUID groupId);
+    List<UserResponseDTO> getAllByUsersOfGroup(UUID groupId);
 
     GroupEntity getById(UUID groupId);
     List<GroupResponseDTO> getByMentorId(UUID mentorId);
+
 
 //    GroupResponseDTO createLessonOfGroup(UUID , List<LessonEntity> );
 

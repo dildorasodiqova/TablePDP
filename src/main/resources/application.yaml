@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pdp_table
+    url: jdbc:postgresql://localhost:5432/TablePDP
     username: postgres
-    password: 2006
+    password: 2004
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

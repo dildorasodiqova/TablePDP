@@ -27,14 +27,12 @@ public class GroupResponseDTO {
     private List<UserResponseDTO> students;/// buyerda studentlarni obkeb beradigan link boladi
 
 
-    public GroupResponseDTO(UUID groupId, String groupName, GroupStatus groupStatus, UUID mentorId, String mentorName, UUID courseId, String courseName, LocalDate startDate) {
+    public GroupResponseDTO(UUID groupId, String groupName, GroupStatus groupStatus, UUID mentorId, UUID courseId,LocalDate startDate) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupStatus = groupStatus;
         this.mentorId = mentorId;
-        this.mentorName = mentorName;
         this.courseId = courseId;
-        this.courseName = courseName;
         this.startDate = startDate;
     }
 }

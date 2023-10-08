@@ -40,7 +40,9 @@ public abstract class BaseService<
         return all.get().map(this::mapEntityToRes).toList();
     }
     public void deleteById(ID id) {
-        repository.deleteById(id);
+        E e = repository.findById(id).orElseThrow(() -> new DataNotFoundException("Not found"));
+        e.setIsActive(false);
+        repository.save(e);
     }
 
     protected abstract RES mapEntityToRes(E entity);
