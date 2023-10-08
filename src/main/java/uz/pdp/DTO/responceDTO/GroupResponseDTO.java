@@ -18,10 +18,10 @@ public class GroupResponseDTO {
     private GroupStatus groupStatus;
 
     private UUID mentorId;
-    private String mentorName;
+//    private String mentorName;
 
     private UUID courseId;
-    private String courseName;
+//    private String courseName;
 
     private LocalDate startDate;
     private List<UserResponseDTO> students;/// buyerda studentlarni obkeb beradigan link boladi

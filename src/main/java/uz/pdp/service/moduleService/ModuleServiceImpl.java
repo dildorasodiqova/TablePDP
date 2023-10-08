@@ -26,13 +26,10 @@ public class ModuleServiceImpl extends BaseService<
         ModuleValidator
         > implements ModuleService{
     private final ModelMapper modelMapper;
-    private final ModuleRepository moduleRepository;
     private final LessonServiceImpl lessonService;
     public ModuleServiceImpl(ModuleRepository repository, ModuleValidator validator, ModelMapper modelMapper, ModelMapper modelMapper1, ModuleRepository moduleRepository, LessonServiceImpl lessonService) {
         super(repository, validator, modelMapper);
         this.modelMapper = modelMapper1;
-        this.moduleRepository = moduleRepository;
-
         this.lessonService = lessonService;
     }
 
