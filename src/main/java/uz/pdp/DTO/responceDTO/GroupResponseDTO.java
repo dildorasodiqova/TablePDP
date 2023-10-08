@@ -1,9 +1,6 @@
 package uz.pdp.DTO.responceDTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.pdp.Entity.enums.GroupStatus;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class GroupResponseDTO {
     private UUID groupId;
     private String groupName;
@@ -28,4 +26,15 @@ public class GroupResponseDTO {
     private LocalDate startDate;
     private List<UserResponseDTO> students;/// buyerda studentlarni obkeb beradigan link boladi
 
+
+    public GroupResponseDTO(UUID groupId, String groupName, GroupStatus groupStatus, UUID mentorId, String mentorName, UUID courseId, String courseName, LocalDate startDate) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupStatus = groupStatus;
+        this.mentorId = mentorId;
+        this.mentorName = mentorName;
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.startDate = startDate;
+    }
 }

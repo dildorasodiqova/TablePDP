@@ -27,4 +27,5 @@ public class AuthController {
     public JwtResponse signIn (@RequestBody AuthDTO dto) {
         return userService.signIn(dto);
     }
+
 }

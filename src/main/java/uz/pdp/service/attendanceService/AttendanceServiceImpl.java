@@ -3,11 +3,13 @@ package uz.pdp.service.attendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.AttendanceCreateDTO;
+import uz.pdp.DTO.requestDTO.GetAbsentStudents;
 import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.AttendanceEntity;
 import uz.pdp.Entity.GroupEntity;
 import uz.pdp.Entity.UserEntity;
+import uz.pdp.exception.AbsentStudentsNotFound;
 import uz.pdp.exception.DidNotComeAttendancesNotFound;
 import uz.pdp.repository.AttendanceRepository;
 import uz.pdp.service.BaseService;
@@ -32,7 +34,7 @@ public class AttendanceServiceImpl extends BaseService<
     private final GroupServiceImpl groupService ;
 
     public AttendanceServiceImpl(AttendanceRepository repository, ModelMapper modelMapper, GroupServiceImpl groupService, AttendanceRepository attendanceRepository) {
-        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>(repository) {
+        super(repository, new AbstractValidator<AttendanceEntity, AttendanceRepository>(attendanceRepository) {
             @Override
             public void validate(AttendanceEntity entity) {
                 super.validate(entity);
@@ -43,32 +45,35 @@ public class AttendanceServiceImpl extends BaseService<
 
     @Override
     protected AttendanceResponseDTO mapEntityToRes(AttendanceEntity entity) {
-        return null;
+        return modelMapper.map(entity , AttendanceResponseDTO.class);
     }
 
     @Override
     protected AttendanceEntity mapCRToEntity(AttendanceCreateDTO createReq) {
-        return null;
+        return modelMapper.map(createReq, AttendanceEntity.class);
     }
 
     @Override
-    public ArrayList<UserResponseDTO> getDidntComeUsers(UUID groupId) {
+    public ArrayList<AttendanceResponseDTO> getAbsentStudent(GetAbsentStudents getAbsentStudents) {
 
-        Optional<GroupEntity> group = groupService.getGroup(groupId);
+        Optional<GroupEntity> group = groupService.getGroup(getAbsentStudents.getGroupId());
+        Integer moduleNum = getAbsentStudents.getModuleNum();
+        Integer lessonNum = getAbsentStudents.getLessonNum();
+        String status ="PARTICIPATED";
+        ArrayList<AttendanceEntity> attendanceEntities = repository.getAbsentStudents(group.get(), moduleNum , lessonNum , status);
+        if (!attendanceEntities.isEmpty()){
+            ArrayList<AttendanceResponseDTO> attendanceResponseDTOArrayList = new ArrayList<>();
+            System.out.println("hello");
 
-        if (group.isPresent()){
-            ArrayList<UserResponseDTO> userResponseDTOS = new ArrayList<>();
-            ArrayList<UserEntity> didNotComeAttendancesByGroup = repository.findUsersWithDidNotComeStatusByGroup(group.get());
-            for (UserEntity userEntity : didNotComeAttendancesByGroup) {
-                UserResponseDTO userResponseDTO = modelMapper.map(userEntity, UserResponseDTO.class);
-                userResponseDTOS.add(userResponseDTO);
+            for (AttendanceEntity attendanceEntity : attendanceEntities) {
+                AttendanceResponseDTO attendanceResponseDTO = mapEntityToRes(attendanceEntity);
+                attendanceResponseDTOArrayList.add(attendanceResponseDTO);
             }
-            return userResponseDTOS ;
+            return attendanceResponseDTOArrayList ;
         }
-
-        throw new DidNotComeAttendancesNotFound("Users not found");
-
+        throw new AbsentStudentsNotFound("Absent students not found !");
     }
+
 
     @Override
     public List<AttendanceEntity> getByLessonId(UUID lessonId) {
@@ -79,7 +84,10 @@ public class AttendanceServiceImpl extends BaseService<
     public List<AttendanceResponseDTO> parse(List<AttendanceEntity> list1) {
         List<AttendanceResponseDTO> list = new ArrayList<>();
         for (AttendanceEntity attendance : list1) {
-            list.add(new AttendanceResponseDTO(attendance.getId(), attendance.getUser().getId(),attendance.getUser().getName(), attendance.getLesson().getId(), attendance.getReason(), attendance.getGroup().getId(),attendance.getGroup().getGroupName(), attendance.getStatus().toString() ));
+            list.add(new AttendanceResponseDTO(attendance.getUser().getId(),
+                    attendance.getUser().getUsername(),
+                    attendance.getReason(),
+                    attendance.getStatus().toString()));
         }
         return list;
     }
