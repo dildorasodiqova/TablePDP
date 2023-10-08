@@ -2,10 +2,8 @@ package uz.pdp.controller;
 
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.DTO.requestDTO.GetAbsentStudents;
 import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
@@ -16,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/attendance")
 public class AttendanceController {
     private final AttendanceServiceImpl attendanceService ;
     @PermitAll
@@ -23,6 +22,12 @@ public class AttendanceController {
     public ArrayList<AttendanceResponseDTO> getDidntComeUsers(@RequestBody GetAbsentStudents getAbsentStudents){
         return attendanceService.getAbsentStudent(getAbsentStudents);
 
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam UUID attendanceId){
+        attendanceService.deleteById(attendanceId);
+        return ResponseEntity.ok("Successfully");
     }
 
 

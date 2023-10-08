@@ -3,18 +3,15 @@ package uz.pdp.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.DTO.requestDTO.GroupCreateDTO;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
+import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.LessonEntity;
 import uz.pdp.service.groupService.GroupServiceImpl;
 import uz.pdp.service.lessonService.LessonServiceImpl;
-
-import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,4 +27,27 @@ public class GroupController {
 //        GroupResponseDTO gr = groupService.createLessonOfGroup(groupResponseDTO.getGroupId(), lesson);
         return ResponseEntity.ok(groupResponseDTO);
     }
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('GROUP_CREATE') or hasRole('SUPER_ADMIN')")
+    @GetMapping("/getById")
+    public ResponseEntity<GroupResponseDTO> getById (@RequestParam UUID groupId){
+        return ResponseEntity.ok(groupService.findById(groupId));
+    }
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('GROUP_CREATE') or hasRole('SUPER_ADMIN')")
+    @GetMapping("/getAllByGroupOfMentor")
+    public ResponseEntity<List<GroupResponseDTO>> getGroupsOfMentor(@RequestParam UUID mentorId){
+        return ResponseEntity.ok(groupService.getByMentorId(mentorId));
+    }
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('GROUP_CREATE') or hasRole('SUPER_ADMIN')")
+    @GetMapping("/getUsersOfGroup")
+    public ResponseEntity<List<UserResponseDTO>> getAllByUsersOfGroup(@RequestParam  UUID groupId){
+        return ResponseEntity.ok(groupService.getAllByUsersOfGroup(groupId));
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam UUID groupId){
+        groupService.deleteById(groupId);
+        return ResponseEntity.ok("Successfully");
+    }
+
+
+
 }

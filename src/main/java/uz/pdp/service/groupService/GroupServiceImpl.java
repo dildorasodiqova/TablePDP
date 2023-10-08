@@ -66,7 +66,7 @@ public class GroupServiceImpl extends BaseService<
     }
 
     @Override
-    public List<UserResponseDTO> getAllByGroupOfUsers(UUID groupId) {
+    public List<UserResponseDTO> getAllByUsersOfGroup(UUID groupId) {
         GroupEntity group = repository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
         List<UserEntity> students = group.getStudents();
        return userService.parse(students);
