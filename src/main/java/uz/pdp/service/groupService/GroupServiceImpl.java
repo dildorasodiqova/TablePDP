@@ -15,6 +15,7 @@ import uz.pdp.service.BaseService;
 import uz.pdp.service.courseService.CourseServiceImpl;
 import uz.pdp.service.userService.UserServiceImpl;
 import uz.pdp.validator.AbstractValidator;
+import uz.pdp.validator.CourseValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +29,13 @@ public class GroupServiceImpl extends BaseService<
         GroupRepository,
         GroupResponseDTO,
         GroupCreateDTO,
-        AbstractValidator<GroupEntity, GroupRepository>
+        AbstractValidator<GroupEntity,GroupRepository>
         > implements GroupService{
     private final ModelMapper modelMapper;
     private  final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
 
-    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService, GroupRepository groupRepository) {
+    public GroupServiceImpl(GroupRepository repository, ModelMapper modelMapper, ModelMapper modelMapper1, UserServiceImpl userService, CourseServiceImpl courseService) {
         super(repository, new AbstractValidator<GroupEntity, GroupRepository>(repository) {
             @Override
             public void validate(GroupEntity entity) {
@@ -62,7 +63,6 @@ public class GroupServiceImpl extends BaseService<
 
     public Optional<GroupEntity> getGroup(UUID groupId) {
         return repository.findById(groupId);
-
     }
 
     @Override

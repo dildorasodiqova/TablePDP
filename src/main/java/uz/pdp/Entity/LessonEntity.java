@@ -34,7 +34,5 @@ public class LessonEntity extends BaseEntity{
 
     @OneToMany(fetch = FetchType.EAGER)
     List<AttendanceEntity> attendances;
-
-
 }
 

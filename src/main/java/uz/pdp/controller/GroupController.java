@@ -23,7 +23,7 @@ public class GroupController {
     private final GroupServiceImpl groupService;
     private final LessonServiceImpl lessonService;
     @PreAuthorize("hasRole('ADMIN') and hasAuthority('GROUP_CREATE') or hasRole('SUPER_ADMIN')")
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<GroupResponseDTO> create(@RequestBody GroupCreateDTO groupCreateDTO, Principal principal) {
         GroupResponseDTO groupResponseDTO = groupService.create(groupCreateDTO);
         List<LessonEntity> lesson = lessonService.createLesson(groupResponseDTO.getGroupId());
