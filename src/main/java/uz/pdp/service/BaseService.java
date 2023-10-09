@@ -34,6 +34,9 @@ public abstract class BaseService<
     }
 
     public List<RES> getAll(int page, int size) {
+        if(page == 0 && size == 0) {
+            return repository.findAll().stream().map(this::mapEntityToRes).toList();
+        }
         Pageable pageable = PageRequest.of(page,size);
 
         Page<E> all = repository.findAll(pageable);

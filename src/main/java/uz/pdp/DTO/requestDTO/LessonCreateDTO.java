@@ -23,5 +23,4 @@ public class LessonCreateDTO {
 
     @NotNull(message = "Lesson number cannot be empty or blank")
     private  Integer number; /// nechinchi darsligi
-
 }
