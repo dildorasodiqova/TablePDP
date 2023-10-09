@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity(name = "courses")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,9 +14,8 @@ import java.util.List;
 public class CourseEntity extends BaseEntity {
     @Column(unique = true)
     private String courseName;
-    private Integer duration; ///davomiyligini nechi oyligi beradi admin
+    private Integer modules; ///davomiyligini nechi oyligi beradi admin
     private Double price;
-    private Integer modules;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<ModuleEntity> module;

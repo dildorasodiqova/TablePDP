@@ -8,7 +8,7 @@ import uz.pdp.Entity.CourseEntity;
 import uz.pdp.exception.DataNotFoundException;
 import uz.pdp.repository.CourseRepository;
 import uz.pdp.service.BaseService;
-import uz.pdp.validator.AbstractValidator;
+import uz.pdp.validator.CourseValidator;
 
 import java.util.UUID;
 
@@ -19,26 +19,21 @@ public class CourseServiceImpl extends BaseService<
         CourseRepository,
         CourseResponseDTO,
         CourseCreateDTO,
-        AbstractValidator<CourseEntity, CourseRepository>
+        CourseValidator
         > implements CourseService{
 
-    public CourseServiceImpl(CourseRepository repository, ModelMapper modelMapper, CourseRepository courseRepository) {
-        super(repository, new AbstractValidator<CourseEntity, CourseRepository>(repository) {
-            @Override
-            public void validate(CourseEntity entity) {
-                super.validate(entity);
-            }
-        }, modelMapper);
+    public CourseServiceImpl(CourseRepository repository, ModelMapper modelMapper, CourseValidator validator) {
+        super(repository, validator, modelMapper);
     }
 
     @Override
     protected CourseResponseDTO mapEntityToRes(CourseEntity entity) {
-        return new CourseResponseDTO(entity.getId(), entity.getCourseName(),entity.getDuration(), entity.getPrice());
+        return new CourseResponseDTO(entity.getId(), entity.getCourseName(),entity.getModules(), entity.getPrice());
     }
 
     @Override
     protected CourseEntity mapCRToEntity(CourseCreateDTO createReq) {
-        return new CourseEntity(createReq.getCourseName(), createReq.getDuration(), createReq.getPrice(),createReq.getDuration());
+        return new CourseEntity(createReq.getCourseName(), createReq.getModules(), createReq.getPrice());
     }
 
     @Override
