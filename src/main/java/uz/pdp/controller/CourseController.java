@@ -10,7 +10,6 @@ import uz.pdp.DTO.responceDTO.CourseResponseDTO;
 import uz.pdp.service.courseService.CourseServiceImpl;
 
 import java.util.List;
-
 import java.util.UUID;
 
 @RestController
@@ -37,5 +36,11 @@ public class CourseController {
         courseService.deleteById(courseId);
         return ResponseEntity.ok("Successfully");
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CourseResponseDTO>> getAll(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(courseService.getAll(page, size));
+    }
+
 }
 

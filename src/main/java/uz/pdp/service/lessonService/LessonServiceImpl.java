@@ -103,4 +103,48 @@ public class LessonServiceImpl extends BaseService<
         lesson.setLessonStatus(LessonStatus.valueOf(status.toUpperCase()));
         return mapEntityToRes(lesson);
     }
+
+    @Override
+    public String start(UUID lessonId) {
+        LessonEntity lesson = repository.findById(lessonId).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+        if (lesson.getNumber() == 1 ) {
+            Boolean aBoolean = LastLessonOfModule(lesson.getModuleNumber() - 1, lesson.getGroup().getId(), 12);
+            if (aBoolean){
+                 lesson.setLessonStatus(LessonStatus.STARTED);
+                 repository.save(lesson);
+                return "Successfully";
+            }else {
+                return "Last lesson did not finished";
+            }
+        }else if (lesson.getNumber() < 12){
+            Boolean aBoolean = LastLessonOfModule(lesson.getModuleNumber(), lesson.getGroup().getId(), lesson.getNumber() - 1);
+            if (aBoolean){
+                lesson.setLessonStatus(LessonStatus.STARTED);
+                repository.save(lesson);
+                return "Successfully";
+            }else {
+                return "Last lesson did not finished";
+            }
+        }
+        return "No such digital lesson exists";
+    }
+
+    @Override
+    public Boolean LastLessonOfModule(int moduleNumber, UUID groupId, int lessonNumber) {
+        LessonEntity lesson = repository.findLastLessonOfModule(groupId, moduleNumber, lessonNumber).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+        if (lesson.getLessonStatus() == LessonStatus.COMPLETED ){
+          return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String finished(UUID lessonId) {
+        LessonEntity lesson = repository.findById(lessonId).orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+        if (lesson.getLessonStatus() == LessonStatus.STARTED){
+            lesson.setLessonStatus(LessonStatus.COMPLETED);
+            return "Successfully";
+        }
+        return "The lesson must be started to finish the lesson";
+    }
 }

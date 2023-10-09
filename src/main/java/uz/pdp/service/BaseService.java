@@ -38,7 +38,6 @@ public abstract class BaseService<
             return repository.findAll().stream().map(this::mapEntityToRes).toList();
         }
         Pageable pageable = PageRequest.of(page,size);
-
         Page<E> all = repository.findAll(pageable);
         return all.get().map(this::mapEntityToRes).toList();
     }
