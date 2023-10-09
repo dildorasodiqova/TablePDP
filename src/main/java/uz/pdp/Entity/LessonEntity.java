@@ -8,7 +8,9 @@ import lombok.Setter;
 import uz.pdp.Entity.enums.LessonStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "lessons")
 @AllArgsConstructor
@@ -34,5 +36,9 @@ public class LessonEntity extends BaseEntity{
 
     @OneToMany(fetch = FetchType.EAGER)
     List<AttendanceEntity> attendances;
+
+
+    public LessonEntity(Integer moduleNumber, GroupEntity group, LessonStatus lessonStatus, Integer number) {
+    }
 }
 

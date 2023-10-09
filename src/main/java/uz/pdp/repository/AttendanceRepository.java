@@ -17,6 +17,8 @@ public interface AttendanceRepository extends JpaRepository<AttendanceEntity, UU
     @Query("SELECT a FROM AttendanceEntity a WHERE a.lesson.number = :lessonNum AND a.group = :group and a.lesson.moduleNumber = :moduleNum and a.status = :status")
     ArrayList<AttendanceEntity> getAbsentStudents(@Param("group") GroupEntity group, @Param("moduleNum") Integer moduleNum, @Param("lessonNum") Integer lessonNum , @Param("status") String status);
 
+
+
     List<AttendanceEntity> findAllByLessonId(UUID lesson_id);
 
 
