@@ -35,7 +35,6 @@ public abstract class BaseService<
 
     public List<RES> getAll(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
-
         Page<E> all = repository.findAll(pageable);
         return all.get().map(this::mapEntityToRes).toList();
     }

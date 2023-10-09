@@ -1,5 +1,6 @@
 package uz.pdp.service.groupService;
 
+import org.springframework.http.ResponseEntity;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.GroupEntity;
@@ -17,6 +18,8 @@ public interface GroupService {
 
     GroupEntity getById(UUID groupId);
     List<GroupResponseDTO> getByMentorId(UUID mentorId);
+
+    String updateStatus(UUID groupId, String status);
 
 
 //    GroupResponseDTO createLessonOfGroup(UUID , List<LessonEntity> );

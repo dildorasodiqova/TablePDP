@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.DTO.requestDTO.GroupCreateDTO;
+import uz.pdp.DTO.responceDTO.CourseResponseDTO;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.Entity.LessonEntity;
@@ -47,6 +48,19 @@ public class GroupController {
         groupService.deleteById(groupId);
         return ResponseEntity.ok("Successfully");
     }
+
+
+    @PutMapping("/updateGroup")
+    public ResponseEntity<String > startGroup(@RequestParam UUID groupId, @RequestParam  String status){
+         return ResponseEntity.ok(groupService.updateStatus(groupId, status));
+    }
+
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<GroupResponseDTO>> getAll(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(groupService.getAll(page, size));
+    }
+
 
 
 

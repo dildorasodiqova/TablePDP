@@ -1,6 +1,7 @@
 package uz.pdp.service.groupService;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uz.pdp.DTO.requestDTO.GroupCreateDTO;
 import uz.pdp.DTO.responceDTO.GroupResponseDTO;
@@ -83,6 +84,31 @@ public class GroupServiceImpl extends BaseService<
         return parse(all);
 
     }
+
+    @Override
+    public String updateStatus(UUID groupId, String status) {
+        GroupEntity group = repository.findById(groupId).orElseThrow(() -> new DataNotFoundException("Group not found"));
+        if (status.toUpperCase().equals(GroupStatus.PROCESS.toString()) && group.getGroupStatus().equals(GroupStatus.NEW)){
+            group.setGroupStatus(GroupStatus.PROCESS);
+            repository.save(group);
+            return "Successfully";
+        }
+        else if (status.toUpperCase().equals(GroupStatus.REASON.toString()) && group.getGroupStatus().equals(GroupStatus.PROCESS)){
+            group.setGroupStatus(GroupStatus.REASON);
+            repository.save(group);
+            repository.save(group);
+            return "Successfully";
+        }
+        else if (status.toUpperCase().equals(GroupStatus.FINISHED.toString()) && group.getGroupStatus().equals(GroupStatus.PROCESS)){
+            group.setGroupStatus(GroupStatus.FINISHED);
+            repository.save(group);
+            repository.save(group);
+            return "Successfully";
+        }
+        return "It is impossible to do this";
+    }
+
+
 
     public List<GroupResponseDTO> parse(List<GroupEntity> all){
         List<GroupResponseDTO> list = new ArrayList<>();

@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.DTO.requestDTO.GetAbsentStudents;
 import uz.pdp.DTO.responceDTO.AttendanceResponseDTO;
+import uz.pdp.DTO.responceDTO.GroupResponseDTO;
 import uz.pdp.DTO.responceDTO.UserResponseDTO;
 import uz.pdp.service.attendanceService.AttendanceServiceImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +30,12 @@ public class AttendanceController {
     public ResponseEntity<String> delete(@RequestParam UUID attendanceId){
         attendanceService.deleteById(attendanceId);
         return ResponseEntity.ok("Successfully");
+    }
+
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<AttendanceResponseDTO>> getAll(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(attendanceService.getAll(page, size));
     }
 
 

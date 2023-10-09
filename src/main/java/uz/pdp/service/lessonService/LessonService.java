@@ -12,4 +12,9 @@ public interface LessonService {
 
     List<LessonEntity> createLesson(UUID groupId);
     LessonResponseDTO updateStatus(UUID lessonId, String status);
+
+    String start(UUID lessonId);
+    Boolean LastLessonOfModule(int i, UUID id, int lessonNumber);
+
+    String finished(UUID lessonId);
 }
